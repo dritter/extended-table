@@ -22,7 +22,7 @@
     "url": "https://github.com/dritter/extended-table/issues"
   },
   "homepage": "https://github.com/dritter/extended-table#readme",
-  "devDependencies": {
+  "dependencies": {
     "@jsier/deep-value": "^1.2.1",
     "fast-sort": "^2.0.1"
   }
