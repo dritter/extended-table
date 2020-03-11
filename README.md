@@ -111,7 +111,7 @@ This component is still not done. There are some open points:
   - [ ] Make headers sticky optionally.
   - [ ] Add Theming. Currently all styles are static.
   - [ ] Improve Responsiveness. It would be nice to control collapsing columns
-        on small screens.
+        on small screens. Like [this](https://codepen.io/SitePoint/pen/LEwdjw) or [this](https://codepen.io/AllThingsSmitty/pen/MyqmdM).
   - [ ] Perfomance Testing
   - [ ] Add examples for combining with filtering / pagination.
   - [ ] Add Unit Tests.
