@@ -1,0 +1,25 @@
+{
+  "name": "extended-table",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dritter/extended-table.git"
+  },
+  "keywords": [
+    "svelte",
+    "data",
+    "table",
+    "datatable"
+  ],
+  "author": "Dominik Ritter",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dritter/extended-table/issues"
+  },
+  "homepage": "https://github.com/dritter/extended-table#readme"
+}
