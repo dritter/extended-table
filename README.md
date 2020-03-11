@@ -4,7 +4,7 @@
 
 ```html
 <script>
-    import ExtendedTable from "ExtendedTable";
+    import ExtendedTable from "extended-table";
     
     let rows = [
         { startnumber: {number: 1}},
