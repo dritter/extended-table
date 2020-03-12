@@ -115,3 +115,4 @@ This component is still not done. There are some open points:
   - [ ] Perfomance Testing
   - [ ] Add examples for combining with filtering / pagination.
   - [ ] Add Unit Tests.
+  - [ ] Create NPM package
