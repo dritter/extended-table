@@ -57,6 +57,33 @@
         sortByDefinition(data, [def]);
     }
 
+    const getClasses = (classes, index, prefix) => {
+        if (index % 2 === 0) {
+            classes.push('even');
+        } else {
+            classes.push('odd');
+        }
+
+        return classes.map((c) => prefix + '-' + c)
+            .join(" ");
+    };
+
+    const slugEx = new RegExp(/[^a-z0-9]/g);
+    const sluggify = (input) => {
+        return input.replace(slugEx, '_');
+    };
+
+    const getColumnClasses = (index, propertyPath) => {
+        let classes = [];
+        propertyPath && classes.push(sluggify(propertyPath));
+
+        return getClasses(classes, index, 'col');
+    };
+
+    const getRowClasses = (index) => {
+        return getClasses([], index, 'row');
+    };
+
     let slots = new Set($$props.$$slots ? Object.getOwnPropertyNames($$props.$$slots) : []);
 </script>
 
@@ -91,8 +118,14 @@
         border-collapse: collapse;
         border-spacing: 0;
     }
+
+    .scroll-wrapper {
+        width: 100%;
+        overflow: scroll;
+    }
 </style>
 
+<div class="scroll-wrapper">
 <table>
     <thead>
         <tr>
@@ -110,10 +143,10 @@
     </thead>
     <tbody>
         {#each data as d, rowIndex}
-            <tr on:click={() => onRowClick(d)} class="{(rowIndex % 2 === 0 ? 'row-even' : 'row-odd')}" class:mouse-pointer={onRowClick !== defaultRowClickHandler}>
+            <tr on:click={() => onRowClick(d)} class="{getRowClasses(rowIndex)}" class:mouse-pointer={onRowClick !== defaultRowClickHandler}>
                 {#each columns as column, columnIndex}
                     {#if column.clickHandler}
-                        <td on:click|stopPropagation={() => column.clickHandler(d)}  class="{columnIndex % 2 === 0 ? 'col-even' : 'col-odd'}">
+                        <td on:click|stopPropagation={() => column.clickHandler(d)}  class="{getColumnClasses(columnIndex, column.propertyPath)}">
                             {#if data && slots.has('column-' + (columnIndex + 1))}
                                 {#if columnIndex === 0}
                                     <slot name="column-1" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
@@ -163,7 +196,7 @@
                             {/if}
                         </td>
                     {:else}
-                        <td class="{columnIndex % 2 === 0 ? 'col-even' : 'col-odd'}">
+                        <td class="{getColumnClasses(columnIndex, column.propertyPath)}">
                             {#if data && slots.has('column-' + (columnIndex + 1))}
                                 {#if columnIndex === 0}
                                     <slot name="column-1" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
@@ -219,3 +252,4 @@
         {/each}
     </tbody>
 </table>
+</div>
