@@ -116,3 +116,4 @@ This component is still not done. There are some open points:
   - [ ] Add examples for combining with filtering / pagination.
   - [ ] Add Unit Tests.
   - [ ] Create NPM package
+  - [ ] Add WAI-ARIA attributes
