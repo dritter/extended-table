@@ -13,6 +13,7 @@
     export let initialSortDirection = 'asc';
     export let collapsedPlaceholder = '...';
     export let stickyHeaders = true;
+    export let stickyOffset = 0;
 
     let sortDefinition = new Set();
 
@@ -115,7 +116,7 @@
     th.sticky {
         background: #fff;
         position: sticky;
-        top: 0;
+        top: var(--sticky-offset);
     }
 
     tbody .row-even {
@@ -135,7 +136,7 @@
     }
 </style>
 
-<table>
+<table style="--sticky-offset:{stickyOffset}">
     <thead>
         <tr>
             {#each columns as column}

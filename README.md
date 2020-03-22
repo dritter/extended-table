@@ -77,7 +77,10 @@ If you have very large columns, you can render them as collapsible by setting
 ### Sticky Headers
 
 Just set the `stickyHeaders={true}` prop, and you are ready. Please note, that
-specifying an overflow on a parent element will break the stickyness.  
+specifying an overflow on a parent element will break the stickyness.
+
+Additionally, you could define an offset, if you use fixed elements above (like
+a navigation header). Set `stickyOffset="100px"`.
 
 ## Limitations
 
