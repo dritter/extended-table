@@ -152,6 +152,7 @@
                 </td>
             {/each}
         </tr>
+        <slot name="additionalHeaderRow"></slot>
     </thead>
     <tbody>
         {#each data as d, rowIndex}
