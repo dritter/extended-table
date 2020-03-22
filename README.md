@@ -69,6 +69,11 @@ property. This should be a callback function.
 For controlling what happens if you click a table cell, you could add a `clickHandler`
 on the column definition.
 
+### Collapsible Columns
+
+If you have very large columns, you can render them as collapsible by setting
+`collapsed: false` on the column definition.
+
 ## Limitations
 
 This component aims for comfort more than for performance. So if you want to
