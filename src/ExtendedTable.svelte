@@ -12,6 +12,7 @@
     export let initialSortBy = null;
     export let initialSortDirection = 'asc';
     export let collapsedPlaceholder = '...';
+    export let stickyHeaders = true;
 
     let sortDefinition = new Set();
 
@@ -107,8 +108,14 @@
         padding: .5rem .625rem .625rem;
     }
 
-    thead td {
+    th {
         font-weight: 700;
+    }
+
+    th.sticky {
+        background: #fff;
+        position: sticky;
+        top: 0;
     }
 
     tbody .row-even {
@@ -123,20 +130,15 @@
     table {
         border-collapse: collapse;
         border-spacing: 0;
-    }
-
-    .scroll-wrapper {
-        width: 100%;
-        overflow: scroll;
+        position: relative;
     }
 </style>
 
-<div class="scroll-wrapper">
 <table>
     <thead>
         <tr>
             {#each columns as column}
-                <td on:click={() => sortBy(column)} class="{ column.sortable ? 'mouse-pointer' : ''}">
+                <th on:click={() => sortBy(column)} class="{ column.sortable ? 'mouse-pointer' : ''}" class:sticky={stickyHeaders}>
                     {#if column.collapsed}
                         <div on:click|stopPropagation={toggleCollapse(column)}>
                             {@html collapsedPlaceholder}
@@ -149,7 +151,7 @@
                             {iconDesc}
                         {/if}
                     {/if}
-                </td>
+                </th>
             {/each}
         </tr>
         <slot name="additionalHeaderRow"></slot>
@@ -277,4 +279,3 @@
         {/each}
     </tbody>
 </table>
-</div>

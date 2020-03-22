@@ -74,6 +74,11 @@ on the column definition.
 If you have very large columns, you can render them as collapsible by setting
 `collapsed: false` on the column definition.
 
+### Sticky Headers
+
+Just set the `stickyHeaders={true}` prop, and you are ready. Please note, that
+specifying an overflow on a parent element will break the stickyness.  
+
 ## Limitations
 
 This component aims for comfort more than for performance. So if you want to
