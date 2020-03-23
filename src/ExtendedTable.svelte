@@ -14,6 +14,7 @@
     export let collapsedPlaceholder = '...';
     export let stickyHeaders = true;
     export let stickyOffset = 0;
+    export let expandAll = false;
 
     let sortDefinition = new Set();
 
@@ -60,8 +61,12 @@
         sortByDefinition(data, [def]);
     }
 
-    const toggleCollapse = (column) => {
-        column.collapsed = !column.collapsed;
+    const expandColumn = (column) => {
+        if (expandAll) {
+            columns.map((column) => column.collapsed = false);
+        } else {
+            column.collapsed = false;
+        }
         columns = columns;
     };
 
@@ -142,7 +147,7 @@
             {#each columns as column}
                 <th on:click={() => sortBy(column)} class="{ column.sortable ? 'mouse-pointer' : ''}" class:sticky={stickyHeaders}>
                     {#if column.collapsed}
-                        <div on:click|stopPropagation={toggleCollapse(column)}>
+                        <div on:click|stopPropagation={expandColumn(column)}>
                             {@html collapsedPlaceholder}
                         </div>
                     {:else}
@@ -165,7 +170,7 @@
                     {#if column.clickHandler}
                         <td on:click|stopPropagation={() => column.clickHandler(d)}  class="{getColumnClasses(columnIndex, column.propertyPath)}">
                             {#if column.collapsed}
-                                <div class="mouse-pointer" on:click|stopPropagation={toggleCollapse(column)}>
+                                <div class="mouse-pointer" on:click|stopPropagation={expandColumn(column)}>
                                     {@html collapsedPlaceholder}
                                 </div>
                             {:else}
@@ -221,7 +226,7 @@
                     {:else}
                         <td class="{getColumnClasses(columnIndex, column.propertyPath)}">
                             {#if column.collapsed}
-                                <div class="mouse-pointer" on:click|stopPropagation={toggleCollapse(column)}>
+                                <div class="mouse-pointer" on:click|stopPropagation={expandColumn(column)}>
                                     {@html collapsedPlaceholder}
                                 </div>
                             {:else}

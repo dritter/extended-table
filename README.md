@@ -101,6 +101,10 @@ as `rowData`. Example:
     </tr>
 ```
 
+### How can I expand all collapsed columns on first click?
+
+If you set `expandAll={true}`, all collapsed columns will expand at once.
+
 ### Why is there no pagination?
 
 IMHO, putting a pagination into this component would be too much. This should
