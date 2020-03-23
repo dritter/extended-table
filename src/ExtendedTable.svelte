@@ -1,4 +1,5 @@
 <script>
+    import { onMount } from 'svelte';
     import { deepValue } from '@jsier/deep-value';
     import { sortByDefinition } from './sortBy';
 
@@ -15,6 +16,32 @@
     export let stickyHeaders = true;
     export let stickyOffset = 0;
     export let expandAll = false;
+    export let autoCollapse = false;
+
+    let windowWidth;
+    let table;
+    onMount(() => {
+        if (autoCollapse) {
+            let heads = table.querySelectorAll('thead th');
+            let tableRect = table.getBoundingClientRect();
+
+            let viewportWidth = windowWidth - tableRect.left;
+            let cumulatedHeadWidths = 0;
+            for (let i = 0; i <= heads.length; i++) {
+                let head = heads[i];
+                let rect = head.getBoundingClientRect();
+
+                if (cumulatedHeadWidths + rect.width > viewportWidth) {
+                    columns.filter((column, index) => index >= i)
+                        .map((column) => column.collapsed = true);
+                    columns = columns;
+                    break;
+                }
+
+                cumulatedHeadWidths += rect.width;
+            }
+        }
+    });
 
     let sortDefinition = new Set();
 
@@ -141,7 +168,8 @@
     }
 </style>
 
-<table style="--sticky-offset:{stickyOffset}">
+<svelte:window bind:innerWidth={windowWidth} />
+<table style="--sticky-offset:{stickyOffset}" bind:this={table}>
     <thead>
         <tr>
             {#each columns as column}

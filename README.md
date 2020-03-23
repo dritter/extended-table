@@ -74,6 +74,12 @@ on the column definition.
 If you have very large columns, you can render them as collapsible by setting
 `collapsed: false` on the column definition.
 
+### Auto collapse Columns
+
+When `autoCollapse={true}` is set, all Columns that are outside of the screen
+are collapsed automatically. You still could collapse other columns manually,
+if you want. 
+
 ### Sticky Headers
 
 Just set the `stickyHeaders={true}` prop, and you are ready. Please note, that
@@ -126,8 +132,6 @@ Currently there are two dependencies:
 
 This component is still not done. There are some open points:
   - [ ] Add Theming. Currently all styles are static.
-  - [ ] Improve Responsiveness. It would be nice to control collapsing columns
-        on small screens. Like [this](https://codepen.io/SitePoint/pen/LEwdjw) or [this](https://codepen.io/AllThingsSmitty/pen/MyqmdM).
   - [ ] Perfomance Testing
   - [ ] Add examples for combining with filtering / pagination.
   - [ ] Add Unit Tests.
