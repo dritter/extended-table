@@ -18,6 +18,11 @@
     export let expandAll = false;
     export let autoCollapse = false;
 
+    const clearCaches = () => {
+        columns = columns;
+        data = data;
+    };
+
     let windowWidth;
     let table;
     onMount(() => {
@@ -34,7 +39,7 @@
                 if (cumulatedHeadWidths + rect.width > viewportWidth) {
                     columns.filter((column, index) => index >= i)
                         .map((column) => column.collapsed = true);
-                    columns = columns;
+                    clearCaches();
                     break;
                 }
 
@@ -62,7 +67,7 @@
         const sortDefinitionArray = Array.from(sortDefinition.values());
 
         if (!sortDefinitionArray || !sortDefinitionArray.length) {
-            columns = columns;
+            clearCaches();
             return;
         }
         sortByDefinition(
@@ -75,9 +80,7 @@
                 return newDef;
             })
         );
-        // Invalidate cache
-        data = data;
-        columns = columns;
+        clearCaches();
     };
 
     if (initialSortBy) {
@@ -94,7 +97,7 @@
         } else {
             column.collapsed = false;
         }
-        columns = columns;
+        clearCaches();
     };
 
     const getClasses = (classes, index, prefix) => {
