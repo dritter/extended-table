@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "./src/ExtendedTable.svelte",
+  "svelte": "./src/ExtendedTable.svelte",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
