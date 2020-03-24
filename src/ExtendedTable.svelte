@@ -37,8 +37,16 @@
                 let rect = head.getBoundingClientRect();
 
                 if (cumulatedHeadWidths + rect.width > viewportWidth) {
-                    columns.filter((column, index) => index >= i)
-                        .map((column) => column.collapsed = true);
+                    if (expandAll) {
+                        columns.filter((column, index) => index >= (i - 1))
+                                .map((column) => column.hidden = true);
+                        columns[i].hidden = false;
+                        columns[i].collapsed = true;
+                    } else {
+                        columns.filter((column, index) => index >= i)
+                            .map((column) => column.collapsed = true);
+                    }
+
                     clearCaches();
                     break;
                 }
@@ -93,7 +101,10 @@
 
     const expandColumn = (column) => {
         if (expandAll) {
-            columns.map((column) => column.collapsed = false);
+            columns.map((column) => {
+                column.collapsed = false;
+                column.hidden = false;
+            });
         } else {
             column.collapsed = false;
         }
@@ -169,6 +180,10 @@
         position: relative;
         width: 100%;
     }
+
+    .hidden {
+        display: none;
+    }
 </style>
 
 <svelte:window bind:innerWidth={windowWidth} />
@@ -176,7 +191,7 @@
     <thead>
         <tr>
             {#each columns as column}
-                <th on:click={() => sortBy(column)} class="{ column.sortable ? 'mouse-pointer' : ''}" class:sticky={stickyHeaders}>
+                <th on:click={() => sortBy(column)} class="{ column.sortable ? 'mouse-pointer' : ''}" class:sticky={stickyHeaders} class:hidden={column.hidden}>
                     {#if column.collapsed}
                         <div on:click|stopPropagation={expandColumn(column)}>
                             {@html collapsedPlaceholder}
@@ -199,7 +214,7 @@
             <tr on:click={() => onRowClick(d)} class="{getRowClasses(rowIndex)}" class:mouse-pointer={onRowClick !== defaultRowClickHandler}>
                 {#each columns as column, columnIndex}
                     {#if column.clickHandler}
-                        <td on:click|stopPropagation={() => column.clickHandler(d)}  class="{getColumnClasses(columnIndex, column.propertyPath)}">
+                        <td on:click|stopPropagation={() => column.clickHandler(d)}  class="{getColumnClasses(columnIndex, column.propertyPath)}"  class:hidden={column.hidden}>
                             {#if column.collapsed}
                                 <div class="mouse-pointer" on:click|stopPropagation={expandColumn(column)}>
                                     {@html collapsedPlaceholder}
@@ -255,7 +270,7 @@
                             {/if}
                         </td>
                     {:else}
-                        <td class="{getColumnClasses(columnIndex, column.propertyPath)}">
+                        <td class="{getColumnClasses(columnIndex, column.propertyPath)}" class:hidden={column.hidden}>
                             {#if column.collapsed}
                                 <div class="mouse-pointer" on:click|stopPropagation={expandColumn(column)}>
                                     {@html collapsedPlaceholder}
