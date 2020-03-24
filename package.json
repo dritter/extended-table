@@ -29,6 +29,7 @@
     "fast-sort": "^2.0.1"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.1.1",
     "jest": "^25.1.0",
     "svelte-jester": "^1.0.5"
   },
@@ -40,5 +41,8 @@
       "js",
       "svelte"
     ]
-  }
+  },
+  "setupFilesAfterEnv": [
+    "@testing-library/jest-dom/extend-expect"
+  ]
 }
