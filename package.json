@@ -5,7 +5,8 @@
   "main": "./src/ExtendedTable.svelte",
   "svelte": "./src/ExtendedTable.svelte",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest src",
+    "test:watch": "npm run test -- --watch"
   },
   "repository": {
     "type": "git",
@@ -26,5 +27,8 @@
   "dependencies": {
     "@jsier/deep-value": "^1.2.1",
     "fast-sort": "^2.0.1"
+  },
+  "devDependencies": {
+    "jest": "^25.1.0"
   }
 }
