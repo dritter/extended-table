@@ -1,5 +1,4 @@
 import '@testing-library/jest-dom/extend-expect'
-
 import { render, fireEvent } from '@testing-library/svelte'
 
 import ExtendedTable from '../src/ExtendedTable.svelte'
@@ -18,12 +17,12 @@ let columnDefinition = [
         sortable: true,
     },
     {
-        title: 'Dings1',
+        title: 'Column1',
         propertyPath: 'xxx',
         sortable: true,
     },
     {
-        title: 'Dings2',
+        title: 'Column2',
         propertyPath: 'yyy',
         sortable: true,
     },
@@ -39,8 +38,7 @@ test('sorting works properly', async () => {
         columns: columnDefinition
     });
 
-    const startnumberHeadline = getByText('Startnumber');
-    console.log(startnumberHeadline.tagName);
+    const startnumberHeadline = getByText('Column1');
     expect(startnumberHeadline).toBeInTheDocument();
 
     const testColumn = container.querySelectorAll('.col-xxx');
