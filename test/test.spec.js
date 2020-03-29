@@ -3,14 +3,14 @@ import { render, fireEvent } from '@testing-library/svelte'
 
 import ExtendedTable from '../src/ExtendedTable.svelte'
 
-const rows = [
+const originalRows = [
     { col1: {subprop: 1}, col2: "xabc", unrelated: "test1", col3: "hier ist zzz"},
     { col1: {subprop: 2}, col2: "test", unrelated: "test2", col3: "hier ist zzzX"},
     { col1: {subprop: 3}, col2: "zzz", unrelated: "test3", col3: "hier ist zzzA"},
     { col1: {subprop: 4}, col2: "bla", unrelated: "test4", col3: "hier ist zzzT"},
 ];
 
-let columnDefinition = [
+let originalColumnDefinition = [
     {
         title: 'Column1',
         propertyPath: 'col1.subprop',
@@ -33,6 +33,8 @@ const getColumn = (nodeList) => {
 };
 
 test('sorting works properly', async () => {
+    const rows = JSON.parse(JSON.stringify(originalRows));
+    const columnDefinition = JSON.parse(JSON.stringify(originalColumnDefinition));
     const { container, getByText } = render(ExtendedTable, {
         data: rows,
         columns: columnDefinition
@@ -49,4 +51,26 @@ test('sorting works properly', async () => {
     // Select again after resorting
     const testColumnReselected = container.querySelectorAll('.col-col2');
     expect(getColumn(testColumnReselected)).toEqual(["bla", "test", "xabc", "zzz"]);
+});
+
+test('sorting works properly reversed', async () => {
+    const rows = JSON.parse(JSON.stringify(originalRows));
+    const columnDefinition = JSON.parse(JSON.stringify(originalColumnDefinition));
+    const { container, getByText } = render(ExtendedTable, {
+        data: rows,
+        columns: columnDefinition
+    });
+
+    const column2Headline = getByText('Column2');
+    expect(column2Headline).toBeInTheDocument();
+
+    const testColumn = container.querySelectorAll('.col-col2');
+    expect(getColumn(testColumn)).toEqual(["xabc", "test", "zzz", "bla"]);
+
+    await fireEvent.click(column2Headline);
+    await fireEvent.click(column2Headline);
+
+    // Select again after resorting
+    const testColumnReselected = container.querySelectorAll('.col-col2');
+    expect(getColumn(testColumnReselected)).toEqual(["zzz", "xabc", "test", "bla"]);
 });
