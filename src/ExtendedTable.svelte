@@ -32,7 +32,7 @@
 
             let viewportWidth = windowWidth - tableRect.left;
             let cumulatedHeadWidths = 0;
-            for (let i = 0; i <= heads.length; i++) {
+            for (let i = 0; i < heads.length; i++) {
                 let head = heads[i];
                 let rect = head.getBoundingClientRect();
 
