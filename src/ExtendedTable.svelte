@@ -161,6 +161,8 @@
     }
 
     th {
+        border-bottom: 2px solid rgb(51, 51, 51);
+        font-size: 110%;
         font-weight: 700;
     }
 
