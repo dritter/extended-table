@@ -17,6 +17,7 @@
     export let stickyOffset = 0;
     export let expandAll = false;
     export let autoCollapse = false;
+    export let multisort = true;
 
     const clearCaches = () => {
         columns = columns;
@@ -69,6 +70,10 @@
         } else if (sortDefinition.has(column)) {
             column.direction = 'desc';
         } else {
+            if (!multisort) {
+                columns.map((c) => c.direction = undefined);
+                sortDefinition = new Set();
+            }
             column.direction = 'asc';
             sortDefinition.add(column);
         }

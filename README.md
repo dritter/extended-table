@@ -35,6 +35,9 @@ column needs to have a property path set to make sorting work.
 Initial sorting could be controlled via the props `initialSortBy` and
 `initialSortDirection`, where `initialSortBy` is a property path (string).
 
+In case you want to allow sorting only one column, you need to set
+`multisort={false}`.
+
 ### Flexible Rendering
 
 The easiest way to render a column is to provide a `propertyPath`. This could
