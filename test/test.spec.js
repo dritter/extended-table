@@ -4,26 +4,26 @@ import { render, fireEvent } from '@testing-library/svelte'
 import ExtendedTable from '../src/ExtendedTable.svelte'
 
 const rows = [
-    { startnumber: {number: 1}, xxx: "xabc", yyy: "test1", zzz: "hier ist zzz"},
-    { startnumber: {number: 2}, xxx: "test", yyy: "test2", zzz: "hier ist zzzX"},
-    { startnumber: {number: 3}, xxx: "zzz", yyy: "test3", zzz: "hier ist zzzA"},
-    { startnumber: {number: 4}, xxx: "bla", yyy: "test4", zzz: "hier ist zzzT"},
+    { col1: {subprop: 1}, col2: "xabc", unrelated: "test1", col3: "hier ist zzz"},
+    { col1: {subprop: 2}, col2: "test", unrelated: "test2", col3: "hier ist zzzX"},
+    { col1: {subprop: 3}, col2: "zzz", unrelated: "test3", col3: "hier ist zzzA"},
+    { col1: {subprop: 4}, col2: "bla", unrelated: "test4", col3: "hier ist zzzT"},
 ];
 
 let columnDefinition = [
     {
-        title: 'Startnumber',
-        propertyPath: 'startnumber.number',
-        sortable: true,
-    },
-    {
         title: 'Column1',
-        propertyPath: 'xxx',
+        propertyPath: 'col1.subprop',
         sortable: true,
     },
     {
         title: 'Column2',
-        propertyPath: 'yyy',
+        propertyPath: 'col2',
+        sortable: true,
+    },
+    {
+        title: 'Column3',
+        propertyPath: 'col3',
         sortable: true,
     },
 ];
@@ -38,15 +38,15 @@ test('sorting works properly', async () => {
         columns: columnDefinition
     });
 
-    const startnumberHeadline = getByText('Column1');
-    expect(startnumberHeadline).toBeInTheDocument();
+    const column2Headline = getByText('Column2');
+    expect(column2Headline).toBeInTheDocument();
 
-    const testColumn = container.querySelectorAll('.col-xxx');
+    const testColumn = container.querySelectorAll('.col-col2');
     expect(getColumn(testColumn)).toEqual(["xabc", "test", "zzz", "bla"]);
 
-    await fireEvent.click(startnumberHeadline);
+    await fireEvent.click(column2Headline);
 
     // Select again after resorting
-    const testColumnReselected = container.querySelectorAll('.col-xxx');
+    const testColumnReselected = container.querySelectorAll('.col-col2');
     expect(getColumn(testColumnReselected)).toEqual(["bla", "test", "xabc", "zzz"]);
 });
