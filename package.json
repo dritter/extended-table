@@ -5,7 +5,7 @@
   "main": "./src/ExtendedTable.svelte",
   "svelte": "./src/ExtendedTable.svelte",
   "scripts": {
-    "test": "jest src",
+    "test": "jest test",
     "test:watch": "npm run test -- --watch"
   },
   "repository": {
@@ -38,13 +38,21 @@
     "svelte-jester": "^1.0.5"
   },
   "jest": {
+    "bail": false,
     "transform": {
+      "^.+\\.(js|jsx)?$": "babel-jest",
       "^.+\\.svelte$": "svelte-jester"
     },
+    "transformIgnorePatterns": [],
     "moduleFileExtensions": [
       "js",
       "svelte"
-    ]
+    ],
+    "collectCoverageFrom": [
+      "./src/**/*.svelte",
+      "./src/**/*.js"
+    ],
+    "verbose": true
   },
   "setupFilesAfterEnv": [
     "@testing-library/jest-dom/extend-expect"
