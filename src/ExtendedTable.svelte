@@ -143,6 +143,14 @@
         return getClasses([], index, 'row');
     };
 
+    const getHeadlineClasses = (column) => {
+        let classes = [];
+        column.sortable && classes.push('mouse-pointer');
+        column.propertyPath && classes.push('col-head-' + sluggify(column.propertyPath));
+
+        return classes.join(" ");
+    };
+
     let slots = new Set($$props.$$slots ? Object.getOwnPropertyNames($$props.$$slots) : []);
 </script>
 
@@ -198,7 +206,7 @@
     <thead>
         <tr>
             {#each columns as column}
-                <th on:click={() => sortBy(column)} class="{ column.sortable ? 'mouse-pointer' : ''}" class:sticky={stickyHeaders} class:hidden={column.hidden}>
+                <th on:click={() => sortBy(column)} class="{getHeadlineClasses(column)}" class:sticky={stickyHeaders} class:hidden={column.hidden}>
                     {#if column.collapsed}
                         <div on:click|stopPropagation={expandColumn(column)}>
                             {@html collapsedPlaceholder}
