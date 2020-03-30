@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "./src/ExtendedTable.svelte",
+  "svelte": "./src/ExtendedTable.svelte",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest test",
+    "test:watch": "npm run test -- --watch"
   },
   "repository": {
     "type": "git",
@@ -25,5 +27,34 @@
   "dependencies": {
     "@jsier/deep-value": "^1.2.1",
     "fast-sort": "^2.0.1"
-  }
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.1.1",
+    "@testing-library/svelte": "^3.0.0",
+    "babel-jest": "^25.1.0",
+    "babel-preset-next": "^1.2.0",
+    "jest": "^25.1.0",
+    "svelte": "^3.20.1",
+    "svelte-jester": "^1.0.5"
+  },
+  "jest": {
+    "bail": false,
+    "transform": {
+      "^.+\\.(js|jsx)?$": "babel-jest",
+      "^.+\\.svelte$": "svelte-jester"
+    },
+    "transformIgnorePatterns": [],
+    "moduleFileExtensions": [
+      "js",
+      "svelte"
+    ],
+    "collectCoverageFrom": [
+      "./src/**/*.svelte",
+      "./src/**/*.js"
+    ],
+    "verbose": true
+  },
+  "setupFilesAfterEnv": [
+    "@testing-library/jest-dom/extend-expect"
+  ]
 }
