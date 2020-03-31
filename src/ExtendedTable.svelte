@@ -30,7 +30,7 @@
     onMount(() => {
         let heads = table.querySelectorAll('thead th');
         if (stickyHeaders) {
-            stickybits(heads, {offset: stickyOffset});
+            stickybits(heads, {stickyBitStickyOffset: stickyOffset});
         }
 
         if (autoCollapse) {
