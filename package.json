@@ -26,7 +26,8 @@
   "homepage": "https://github.com/dritter/extended-table#readme",
   "dependencies": {
     "@jsier/deep-value": "^1.2.1",
-    "fast-sort": "^2.0.1"
+    "fast-sort": "^2.0.1",
+    "stickybits": "^3.7.6"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.1.1",
