@@ -1,6 +1,7 @@
 <script>
     import { onMount } from 'svelte';
     import { deepValue } from '@jsier/deep-value';
+    import stickybits from 'stickybits';
     import { sortByDefinition } from './sortBy';
 
     export let data = [];
@@ -27,8 +28,12 @@
     let windowWidth;
     let table;
     onMount(() => {
+        let heads = table.querySelectorAll('thead th');
+        if (stickyHeaders) {
+            stickybits(heads, {offset: stickyOffset});
+        }
+
         if (autoCollapse) {
-            let heads = table.querySelectorAll('thead th');
             let tableRect = table.getBoundingClientRect();
 
             let viewportWidth = windowWidth - tableRect.left;
@@ -159,6 +164,11 @@
         cursor: pointer;
     }
 
+    .overflow-container {
+        max-width: 100vw;
+        position: relative;
+    }
+
     tbody tr:hover {
         background-color: rgba(0, 0, 0, 0.1) !important;
     }
@@ -169,15 +179,10 @@
     }
 
     th {
+        background-color: rgb(255, 255, 255);
         border-bottom: 2px solid rgb(51, 51, 51);
         font-size: 110%;
         font-weight: 700;
-    }
-
-    th.sticky {
-        background: #fff;
-        position: sticky;
-        top: var(--sticky-offset);
     }
 
     tbody .row-even {
@@ -192,8 +197,6 @@
     table {
         border-collapse: collapse;
         border-spacing: 0;
-        position: relative;
-        width: 100%;
     }
 
     .hidden {
@@ -202,11 +205,12 @@
 </style>
 
 <svelte:window bind:innerWidth={windowWidth} />
-<table style="--sticky-offset:{stickyOffset}" bind:this={table}>
+<div class="overflow-container">
+<table bind:this={table}>
     <thead>
         <tr>
             {#each columns as column}
-                <th on:click={() => sortBy(column)} class="{getHeadlineClasses(column)}" class:sticky={stickyHeaders} class:hidden={column.hidden}>
+                <th on:click={() => sortBy(column)} class="{getHeadlineClasses(column)}" class:hidden={column.hidden}>
                     {#if column.collapsed}
                         <div on:click|stopPropagation={expandColumn(column)}>
                             {@html collapsedPlaceholder}
@@ -347,3 +351,4 @@
         {/each}
     </tbody>
 </table>
+</div>
