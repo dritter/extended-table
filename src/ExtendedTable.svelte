@@ -25,10 +25,25 @@
         data = data;
     };
 
+    let precalculatedColumnPositions = {};
     let windowWidth;
     let table;
     onMount(() => {
         let heads = table.querySelectorAll('thead th');
+
+        if (columns.some((col) => col.sticky)) {
+            for (let i = 0; i < heads.length; i++) {
+                let head = heads[i];
+                precalculatedColumnPositions['index-' + i] = head.getBoundingClientRect();
+                // Apply styles directly.
+                head.style.cssText = getColumnStickyStyles(columns[i], i, 10);
+                let styles = getColumnStickyStyles(columns[i], i);
+                Array.prototype.map.call(table.querySelectorAll(`tbody tr td:nth-of-type(${i + 1})`), (td) => {
+                    td.style.cssText = styles;
+                });
+            }
+        }
+
         if (stickyHeaders) {
             stickybits(heads, {stickyBitStickyOffset: stickyOffset});
         }
@@ -156,6 +171,14 @@
         return classes.join(" ");
     };
 
+    const getColumnStickyStyles = (column, index, zIndexBooster) => {
+        if (!column.sticky) {
+            return;
+        }
+
+        return `z-index: ${(columns.length + 1 + zIndexBooster) - index}; left: ${precalculatedColumnPositions['index-' + index].left}px`;
+    };
+
     let slots = new Set($$props.$$slots ? Object.getOwnPropertyNames($$props.$$slots) : []);
 </script>
 
@@ -201,6 +224,10 @@
     .hidden {
         display: none;
     }
+
+    .sticky-col {
+        position: sticky;
+    }
 </style>
 
 <svelte:window bind:innerWidth={windowWidth} />
@@ -208,8 +235,8 @@
 <table bind:this={table}>
     <thead>
         <tr>
-            {#each columns as column}
-                <th on:click={() => sortBy(column)} class="{getHeadlineClasses(column)}" class:hidden={column.hidden}>
+            {#each columns as column, columnIndex}
+                <th on:click={() => sortBy(column)} class="{getHeadlineClasses(column)}" class:hidden={column.hidden} class:sticky-col={column.sticky}>
                     {#if column.collapsed}
                         <div on:click|stopPropagation={expandColumn(column)}>
                             {@html collapsedPlaceholder}
@@ -232,7 +259,7 @@
             <tr on:click={() => onRowClick(d)} class="{getRowClasses(rowIndex)}" class:mouse-pointer={onRowClick !== defaultRowClickHandler}>
                 {#each columns as column, columnIndex}
                     {#if column.clickHandler}
-                        <td on:click|stopPropagation={() => column.clickHandler(d)}  class="{getColumnClasses(columnIndex, column.propertyPath)}"  class:hidden={column.hidden}>
+                        <td on:click|stopPropagation={() => column.clickHandler(d)}  class="{getColumnClasses(columnIndex, column.propertyPath)}"  class:hidden={column.hidden} class:sticky-col={column.sticky}>
                             {#if column.collapsed}
                                 <div class="mouse-pointer" on:click|stopPropagation={expandColumn(column)}>
                                     {@html collapsedPlaceholder}
@@ -288,7 +315,7 @@
                             {/if}
                         </td>
                     {:else}
-                        <td class="{getColumnClasses(columnIndex, column.propertyPath)}" class:hidden={column.hidden}>
+                        <td class="{getColumnClasses(columnIndex, column.propertyPath)}" class:hidden={column.hidden} class:sticky-col={column.sticky}>
                             {#if column.collapsed}
                                 <div class="mouse-pointer" on:click|stopPropagation={expandColumn(column)}>
                                     {@html collapsedPlaceholder}

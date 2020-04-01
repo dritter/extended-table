@@ -91,6 +91,10 @@ specifying an overflow on a parent element will break the stickyness.
 Additionally, you could define an offset, if you use fixed elements above (like
 a navigation header). Set `stickyOffset="100px"`.
 
+### Sticky Columns
+
+To get sticky columns, you need to set `sticky: true` on the Column Definition.
+
 ## Limitations
 
 This component aims for comfort more than for performance. So if you want to
