@@ -3,6 +3,7 @@
     import { deepValue } from '@jsier/deep-value';
     import stickybits from 'stickybits/dist/stickybits.es';
     import { sortByDefinition } from './sortBy';
+    import ColumnFilter from "./ColumnFilter.svelte";
 
     export let data = [];
     export let columns = [];
@@ -19,6 +20,7 @@
     export let expandAll = false;
     export let autoCollapse = false;
     export let multisort = true;
+    export let showColumnFilter = false;
 
     const clearCaches = () => {
         columns = columns;
@@ -204,6 +206,11 @@
 </style>
 
 <svelte:window bind:innerWidth={windowWidth} />
+
+{#if showColumnFilter}
+    <ColumnFilter bind:columns={columns} />
+{/if}
+
 <div class="overflow-container">
 <table bind:this={table}>
     <thead>
