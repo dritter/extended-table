@@ -1,7 +1,7 @@
 <script>
     import { onMount } from 'svelte';
     import { deepValue } from '@jsier/deep-value';
-    import stickybits from 'stickybits';
+    import stickybits from 'stickybits/dist/stickybits.es';
     import { sortByDefinition } from './sortBy';
 
     export let data = [];
