@@ -115,7 +115,9 @@
         if (expandAll) {
             columns.map((column) => {
                 column.collapsed = false;
-                column.hidden = false;
+                if (autoCollapse) {
+                    column.hidden = false;
+                }
             });
         } else {
             column.collapsed = false;
