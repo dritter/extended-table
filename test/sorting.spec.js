@@ -96,3 +96,25 @@ test('sorting works properly with nested objects', async () => {
     const testColumnReselected = container.querySelectorAll('.col-col1_subprop');
     expect(getColumn(testColumnReselected)).toEqual(["4", "3", "2", "1"]);
 });
+
+test('multisort=false lets only sort one column', async () => {
+    const rows = JSON.parse(JSON.stringify(originalRows));
+    const columnDefinition = JSON.parse(JSON.stringify(originalColumnDefinition));
+    const { container, getByText } = render(ExtendedTable, {
+        data: rows,
+        columns: columnDefinition,
+        multisort: false
+    });
+
+    const column2Headline = getByText('Column2');
+    expect(column2Headline).toBeInTheDocument();
+
+    const testColumn = container.querySelectorAll('.col-col1_subprop');
+    expect(getColumn(testColumn)).toEqual(["1", "2", "3", "4"]);
+
+    await fireEvent.click(column2Headline);
+
+    // Select again after resorting
+    const testColumnReselected = container.querySelectorAll('.col-col1_subprop');
+    expect(getColumn(testColumnReselected)).toEqual(["4", "2", "1", "3"]);
+});
