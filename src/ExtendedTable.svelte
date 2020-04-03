@@ -11,8 +11,9 @@
 
     export let iconAsc = '↑';
     export let iconDesc = '↓';
-    export let initialSortBy = null;
+    export let initialSortBy = null; // PropertyPath
     export let initialSortDirection = 'asc';
+    export let showSortIndicatorsOnInitialSort = true;
     export let collapsedPlaceholder = '...';
     export let stickyHeaders = true;
     export let stickyOffset = 0;
@@ -102,6 +103,11 @@
     };
 
     if (initialSortBy) {
+        if (showSortIndicatorsOnInitialSort) {
+            const initialSortColumn = columns.find((c) => c.propertyPath === initialSortBy);
+            initialSortColumn.propertyPath = initialSortBy;
+            initialSortColumn.direction = initialSortDirection;
+        }
         const def = {};
         def[initialSortDirection] = (u) => {
             return deepValue(u, initialSortBy);
