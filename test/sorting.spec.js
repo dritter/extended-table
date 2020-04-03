@@ -118,3 +118,17 @@ test('multisort=false lets only sort one column', async () => {
     const testColumnReselected = container.querySelectorAll('.col-col1_subprop');
     expect(getColumn(testColumnReselected)).toEqual(["4", "2", "1", "3"]);
 });
+
+test('initial sort works as expected', async () => {
+    const rows = JSON.parse(JSON.stringify(originalRows));
+    const columnDefinition = JSON.parse(JSON.stringify(originalColumnDefinition));
+    const { container, getByText } = render(ExtendedTable, {
+        data: rows,
+        columns: columnDefinition,
+        initialSortBy: 'col2',
+        initialSortDirection: 'desc'
+    });
+
+    const testColumn = container.querySelectorAll('.col-col2');
+    expect(getColumn(testColumn)).toEqual(["zzz", "xabc", "test", "bla"]);
+});
