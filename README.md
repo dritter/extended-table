@@ -25,6 +25,10 @@
 </ExtendedTable>
 ```
 
+## Examples
+
+Have a [look at the examples folder](examples/README.md).
+
 ## Features
 
 ### Sorting
@@ -136,7 +140,6 @@ Currently there are three dependencies:
 
 This component is still not done. There are some open points:
   - [ ] Perfomance Testing
-  - [ ] Add examples for combining with filtering / pagination.
   - [ ] Add Unit Tests.
   - [ ] Create NPM package
   - [ ] Add WAI-ARIA attributes
