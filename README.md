@@ -135,7 +135,6 @@ Currently there are three dependencies:
 ## TODO
 
 This component is still not done. There are some open points:
-  - [ ] Add Theming. Currently all styles are static.
   - [ ] Perfomance Testing
   - [ ] Add examples for combining with filtering / pagination.
   - [ ] Add Unit Tests.
