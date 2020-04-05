@@ -14,6 +14,7 @@ ExtendedTable sets a variety of css classes, so that you can style your table ea
 div :global(.col-even) {
     // Your styles
 }
+</style>
 ```
 
 ## Defined CSS-Classes
