@@ -1,5 +1,7 @@
 # Theming
 
+![](../../images/Theming.png)
+
 ExtendedTable sets a variety of css classes, so that you can style your table easily. Only drawback is that it have to be global styles.
  You can add elements around the component to add more specificity:
 
