@@ -140,6 +140,5 @@ Currently there are three dependencies:
 
 This component is still not done. There are some open points:
   - [ ] Perfomance Testing
-  - [ ] Add Unit Tests.
   - [ ] Create NPM package
   - [ ] Add WAI-ARIA attributes
