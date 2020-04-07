@@ -14,7 +14,7 @@
         });
     };
 
-    const isInRange = (page, activePage) => {
+    const isInRange = (page, activePage, totalPages) => {
         if ((page < keepStartEndPages) || (page >= totalPages - keepStartEndPages)) {
             return true;
         }
@@ -30,9 +30,9 @@
 <nav>
     <ul>
         {#each Array(totalPages) as ignoredVal, currentPage}
-            {#if isInRange(currentPage, activePage)}
+            {#if isInRange(currentPage, activePage, totalPages)}
                 <li class:active={currentPage === activePage} class="page mouse-pointer" on:click={() => switchPage(currentPage)}>{currentPage + 1}</li>
-            {:else if isInRange(currentPage - 1, activePage) }
+            {:else if isInRange(currentPage - 1, activePage, totalPages) }
                 <li class="page--hidden">...</li>
             {/if}
         {/each}
