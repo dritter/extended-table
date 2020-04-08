@@ -77,6 +77,11 @@
      * Filter stuff
      */
     let filterProp = "username";
+
+    /**
+     * Theming
+     */
+    let theme = "light";
 </script>
 
 <div>
@@ -94,7 +99,22 @@
         Attention: In this example, filter is only applied to the propertyPath (not on combined columns).
     {/if}
 </div>
-<div class="table1">
+<div>
+    Theme
+    <label>
+        <input type="radio" value="light" bind:group={theme} /> Light
+    </label>
+    <label>
+        <input type="radio" value="dark" bind:group={theme} /> Dark
+    </label>
+</div>
+<div style="
+        --theme-background-color: {theme === 'light' ? '#ffffff' : '#7f8c8d'};
+        --theme-headline-background-color: {theme === 'light' ? '#ffffff' : '#34495e'};
+        --theme-text-color: {theme === 'light' ? '#34495e' : '#ecf0f1'};
+        "
+     class="table1"
+>
     <ExtendedTable columns={columnDefinition} data={rows}>
         <!-- Since we are operating on the original data, we can as for gender here -->
         <div slot="column-2" let:data={person}>
@@ -127,6 +147,14 @@
 </div>
 
 <style>
+    div :global(table) {
+        background-color: var(--theme-background-color);
+        color: var(--theme-text-color);
+    }
+    div :global(table.et th) {
+        background-color: var(--theme-headline-background-color);
+    }
+
     .table1 :global(.col-last_name) {
         background-color: goldenrod;
     }
