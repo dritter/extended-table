@@ -211,7 +211,7 @@
 
 <svelte:window bind:innerWidth={windowWidth} />
 <div class="overflow-container">
-<table bind:this={table}>
+<table bind:this={table} class="et">
     <thead>
         <tr>
             {#each columns as column}
