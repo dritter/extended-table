@@ -3,6 +3,7 @@
     import {default as data} from '../../fixtures/fixtures.json';
     import Pagination from "./Pagination.svelte";
     import RowFilter from "./RowFilter.svelte";
+    import ThemeSwitch from "./ThemeSwitch.svelte";
 
     let columnDefinition = [
         {
@@ -99,15 +100,7 @@
         Attention: In this example, filter is only applied to the propertyPath (not on combined columns).
     {/if}
 </div>
-<div>
-    Theme
-    <label>
-        <input type="radio" value="light" bind:group={theme} /> Light
-    </label>
-    <label>
-        <input type="radio" value="dark" bind:group={theme} /> Dark
-    </label>
-</div>
+<ThemeSwitch bind:theme={theme} />
 <div style="
         --theme-background-color: {theme === 'light' ? '#ffffff' : '#7f8c8d'};
         --theme-headline-background-color: {theme === 'light' ? '#ffffff' : '#34495e'};
