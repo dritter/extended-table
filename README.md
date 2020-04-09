@@ -1,5 +1,7 @@
 # ExtendedTable
 
+![Node.js CI](https://github.com/dritter/extended-table/workflows/Node.js%20CI/badge.svg)
+
 ## Usage
 
 ```html
