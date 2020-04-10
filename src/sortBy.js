@@ -17,6 +17,14 @@ export const sortBy = (data, propertyPath, direction) => {
 };
 
 let sortDefinition = new Set();
+/**
+ *
+ * @param column Object - The column that was clicked on
+ * @param columns array - All Columns
+ * @param data array - The rows
+ * @param multisort boolean - true if sorting multiple columns is enabled
+ * @param cacheClearCallback function - Callback to clear cache
+ */
 export const sortByColumn = (column, columns, data, multisort, cacheClearCallback) => {
     if (!column.sortable) {
         return;
