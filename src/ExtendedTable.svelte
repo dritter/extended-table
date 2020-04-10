@@ -2,7 +2,7 @@
     import { onMount } from 'svelte';
     import { deepValue } from '@jsier/deep-value';
     import stickybits from 'stickybits/dist/stickybits.es';
-    import { sortByDefinition, sortByColumn } from './sortBy';
+    import { sortByDefinition } from './sortBy';
 
     export let data = [];
     export let columns = [];
@@ -20,6 +20,17 @@
     export let expandAll = false;
     export let autoCollapse = false;
     export let multisort = true;
+    export let sortingFunction = null;
+
+    let sortByColumn;
+    if (sortingFunction === null) {
+        // Dynamic import
+        import('./sortBy').then((sortByObj) => {
+            sortByColumn = sortByObj.sortByColumn;
+        });
+    } else {
+        sortByColumn = sortingFunction;
+    }
 
     const clearCaches = () => {
         columns = columns;
