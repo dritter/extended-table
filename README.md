@@ -130,6 +130,17 @@ be done from outside.
 Like pagination this should be done from the outside. So its up to you to add
 a filter.
 
+### How can I use my own sorting function?
+
+To use your own sorting function, you can set `sortingFunction={yourSortFunction}`
+property. This function gets called when you click on a header column. Parameters
+are:
+  - `column` (Object) - the current column that was clicked on
+  - `columns` (array) - All columns
+  - `data` (array) - The rows
+  - `multisort` (boolean) - `true`, if sorting for multiple columns is enabled
+  - `clearCacheCallback` (function) - Callback to clear the caches
+
 ## Dependencies
 
 Currently there are three dependencies:
