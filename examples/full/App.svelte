@@ -5,19 +5,24 @@
     import RowFilter from "./RowFilter.svelte";
     import ThemeSwitch from "./ThemeSwitch.svelte";
 
+    import { sortByColumn } from "../../src/sortBy";
+
     let columnDefinition = [
         {
             title: 'Username',
             propertyPath: 'username',
+            sortable: true,
         },
         {
             title: 'Name',
             value: (rowData) => `${rowData.title} ${rowData.first_name} ${rowData.last_name}`,
             propertyPath: 'last_name',
+            sortable: true,
         },
         {
             title: 'Location',
             propertyPath: 'location.postcode',
+            sortable: true,
         },
     ];
 
@@ -38,7 +43,15 @@
         activePage = page;
         let offset = (page) * itemsPerPage;
 
-        rows = data.slice(offset, offset + itemsPerPage);
+        return data.slice(offset, offset + itemsPerPage);
+    };
+
+    const sortByWrapper = (column, columns, innerRows, multisort, cacheClearCallback) => {
+        // Sort the full data instead of just the page
+        sortByColumn(column, columns, data, multisort, cacheClearCallback);
+        // Overwrite rows, so that ExtendedTable picks up the new rows.
+        rows = getPage(activePage, data);
+        cacheClearCallback();
     };
 
     const calculatePages = (data) => {
@@ -49,7 +62,7 @@
     const rerender = (data) => {
         fullData = data;
         pages = calculatePages(data);
-        getPage(0, data);
+        rows = getPage(0, data);
     };
 
     let fullData = [];
@@ -108,7 +121,7 @@
         "
      class="table1"
 >
-    <ExtendedTable columns={columnDefinition} data={rows}>
+    <ExtendedTable columns={columnDefinition} data={rows} sortingFunction={sortByWrapper}>
         <!-- Since we are operating on the original data, we can access all Properties like gender here -->
         <div slot="column-2" let:data={person}>
             {@html getGenderIcon(person)} {person.first_name} {person.last_name}
@@ -120,7 +133,7 @@
         </tr>
     </ExtendedTable>
 </div>
-<Pagination totalPages={pages} activePage={activePage} on:change={(event) => getPage(event.detail.page, fullData)} />
+<Pagination totalPages={pages} activePage={activePage} on:change={(event) => rows = getPage(event.detail.page, fullData)} />
 
 <div>
     Show
