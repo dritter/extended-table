@@ -109,7 +109,7 @@
      class="table1"
 >
     <ExtendedTable columns={columnDefinition} data={rows}>
-        <!-- Since we are operating on the original data, we can as for gender here -->
+        <!-- Since we are operating on the original data, we can access all Properties like gender here -->
         <div slot="column-2" let:data={person}>
             {@html getGenderIcon(person)} {person.first_name} {person.last_name}
         </div>
