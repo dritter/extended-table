@@ -2,7 +2,7 @@
     import { onMount } from 'svelte';
     import { deepValue } from '@jsier/deep-value';
     import stickybits from 'stickybits/dist/stickybits.es';
-    import { sortByDefinition } from './sortBy';
+    import { sortByDefinition, sortByColumn } from './sortBy';
 
     export let data = [];
     export let columns = [];
@@ -62,45 +62,6 @@
             }
         }
     });
-
-    let sortDefinition = new Set();
-
-    const sortBy = (column) => {
-        if (!column.sortable) {
-            return;
-        }
-
-        if (sortDefinition.has(column) && column.direction === 'desc') {
-            sortDefinition.delete(column);
-            column.direction = '';
-        } else if (sortDefinition.has(column)) {
-            column.direction = 'desc';
-        } else {
-            if (!multisort) {
-                columns.map((c) => c.direction = undefined);
-                sortDefinition = new Set();
-            }
-            column.direction = 'asc';
-            sortDefinition.add(column);
-        }
-        const sortDefinitionArray = Array.from(sortDefinition.values());
-
-        if (!sortDefinitionArray || !sortDefinitionArray.length) {
-            clearCaches();
-            return;
-        }
-        sortByDefinition(
-            data,
-            sortDefinitionArray.map((def) => {
-                const newDef = {};
-                newDef[def.direction || 'asc'] = (u) => {
-                    return deepValue(u, def.propertyPath);
-                };
-                return newDef;
-            })
-        );
-        clearCaches();
-    };
 
     if (initialSortBy) {
         if (showSortIndicatorsOnInitialSort) {
@@ -215,7 +176,7 @@
     <thead>
         <tr>
             {#each columns as column}
-                <th on:click={() => sortBy(column)} class="{getHeadlineClasses(column)}" class:hidden={column.hidden}>
+                <th on:click={() => sortByColumn(column, columns, data, multisort, clearCaches)} class="{getHeadlineClasses(column)}" class:hidden={column.hidden}>
                     {#if column.collapsed}
                         <div on:click|stopPropagation={expandColumn(column)}>
                             {@html collapsedPlaceholder}
