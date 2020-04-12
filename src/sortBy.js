@@ -62,3 +62,7 @@ export const sortByColumn = (column, columns, data, multisort, cacheClearCallbac
 
     cacheClearCallback();
 };
+
+export const resetSorting = () => {
+    sortDefinition.clear();
+};
