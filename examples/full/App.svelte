@@ -1,8 +1,8 @@
 <script>
     import ExtendedTable from "../../src/ExtendedTable.svelte";
-    import {default as data} from '../../fixtures/fixtures.json';
+    import {default as originalData} from '../../fixtures/fixtures.json';
     import Pagination from "./Pagination.svelte";
-    import RowFilter from "./RowFilter.svelte";
+    import { filter } from './rowFilter';
     import ThemeSwitch from "./ThemeSwitch.svelte";
 
     import { sortByColumn } from "../../src/sortBy";
@@ -31,7 +31,7 @@
      */
     let itemsPerPage = 10;
     const switchShownItemsPerPage = () => {
-        rerender(fullData);
+        rerender(filteredAndSortedRows || sortedRows || originalData);
     };
 
     /*
@@ -39,6 +39,8 @@
      */
     let activePage = 0;
     let rows = [];
+    let sortedRows = null;
+    let filteredAndSortedRows = null;
     const getPage = (page, data) => {
         activePage = page;
         let offset = (page) * itemsPerPage;
@@ -48,9 +50,11 @@
 
     const sortByWrapper = (column, columns, innerRows, multisort, cacheClearCallback) => {
         // Sort the full data instead of just the page
-        sortByColumn(column, columns, data, multisort, cacheClearCallback);
+        sortByColumn(column, columns, originalData, multisort, cacheClearCallback);
+        sortedRows = originalData;
+        filteredAndSortedRows = filter(sortedRows, filterProp, filterValue);
         // Overwrite rows, so that ExtendedTable picks up the new rows.
-        rows = getPage(activePage, data);
+        rows = getPage(activePage, filteredAndSortedRows);
         cacheClearCallback();
     };
 
@@ -60,16 +64,10 @@
 
     let pages = 0;
     const rerender = (data) => {
-        fullData = data;
         pages = calculatePages(data);
         rows = getPage(0, data);
     };
-
-    let fullData = [];
-    const reset = () => {
-        rerender(JSON.parse(JSON.stringify(data)));
-    };
-    reset();
+    rerender(JSON.parse(JSON.stringify(originalData)));
 
     /*
      * Special functions for rendering
@@ -92,6 +90,20 @@
      */
     let filterProp = "username";
 
+    let filterValue = null;
+    const doFilter = (event) => {
+        let filterRows = sortedRows || originalData;
+        filterValue = event.target.value.trim().toLowerCase();
+        if (!filterValue) {
+            filterValue = null;
+            rerender(sortedRows);
+            return;
+        }
+
+        filteredAndSortedRows = filter(filterRows, filterProp, filterValue);
+        rerender(filteredAndSortedRows);
+    };
+
     /**
      * Theming
      */
@@ -108,7 +120,8 @@
         {/each}
     </select>
     for
-    <RowFilter filterProp={filterProp} rows={data} on:change={(event) => rerender(event.detail)} on:reset={reset} />
+    <input on:input={(event) => doFilter(event)} />
+
     {#if filterProp.includes('.')}
         Attention: In this example, filter is only applied to the propertyPath (not on combined columns).
     {/if}
@@ -133,7 +146,7 @@
         </tr>
     </ExtendedTable>
 </div>
-<Pagination totalPages={pages} activePage={activePage} on:change={(event) => rows = getPage(event.detail.page, fullData)} />
+<Pagination totalPages={pages} activePage={activePage} on:change={(event) => rows = getPage(event.detail.page, filteredAndSortedRows)} />
 
 <div>
     Show
