@@ -23,10 +23,11 @@
     export let sortingFunction = null;
 
     if (sortingFunction === null) {
-        // Dynamic import
-        import('./sortBy').then((sortByObj) => {
+        (async () => {
+            // Dynamic import
+            let sortByObj = await import('./sortBy');
             sortingFunction = sortByObj.sortByColumn;
-        });
+        })();
     }
 
     const clearCaches = () => {
