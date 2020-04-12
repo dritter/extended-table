@@ -9,9 +9,7 @@ const getColumn = (nodeList) => {
 
 test('rendering with slots', async () => {
     const { container } = render(SlotRenderingTest);
-    console.log(container.innerHTML);
-    console.log("Component", SlotRenderingTest);
-
     const testColumn = container.querySelectorAll('.col-col2');
+
     expect(getColumn(testColumn)).toEqual(["new-xabc", "new-test", "new-zzz", "new-bla"]);
 });
