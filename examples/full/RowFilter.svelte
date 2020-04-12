@@ -1,11 +1,20 @@
 <script>
     import { onMount, createEventDispatcher } from 'svelte';
-    import { deepValue } from '@jsier/deep-value';
 
     const dispatch = createEventDispatcher();
 
     export let rows = [];
     export let filterProp = '';
+    export let filterCallback = null;
+
+    if (filterCallback === null) {
+        // Dynamic import
+        import('./rowFilter').then((filterObj) => {
+            console.log(filterObj);
+            filterCallback = filterObj.filter;
+        });
+    }
+
     let originalRows = [];
 
     onMount(() => {
@@ -23,11 +32,7 @@
             return;
         }
 
-        rows = rows.filter((row) => {
-            let currentValue = "" + deepValue(row, filterProp);
-
-            return currentValue.trim().toLowerCase().includes(value);
-        });
+        rows = filterCallback(rows, filterProp, value);
         dispatch('change', rows);
     }
 </script>
