@@ -22,14 +22,11 @@
     export let multisort = true;
     export let sortingFunction = null;
 
-    let sortByColumn;
     if (sortingFunction === null) {
         // Dynamic import
         import('./sortBy').then((sortByObj) => {
-            sortByColumn = sortByObj.sortByColumn;
+            sortingFunction = sortByObj.sortByColumn;
         });
-    } else {
-        sortByColumn = sortingFunction;
     }
 
     const clearCaches = () => {
@@ -187,7 +184,7 @@
     <thead>
         <tr>
             {#each columns as column}
-                <th on:click={() => sortByColumn(column, columns, data, multisort, clearCaches)} class="{getHeadlineClasses(column)}" class:hidden={column.hidden}>
+                <th on:click={() => sortingFunction(column, columns, data, multisort, clearCaches)} class="{getHeadlineClasses(column)}" class:hidden={column.hidden}>
                     {#if column.collapsed}
                         <div on:click|stopPropagation={expandColumn(column)}>
                             {@html collapsedPlaceholder}
