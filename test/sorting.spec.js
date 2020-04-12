@@ -1,5 +1,6 @@
-import '@testing-library/jest-dom/extend-expect'
-import { render, fireEvent } from '@testing-library/svelte'
+import '@testing-library/jest-dom/extend-expect';
+import { render, fireEvent } from '@testing-library/svelte';
+import { sortByColumn, resetSorting } from '../src/sortBy';
 
 import ExtendedTable from '../src/ExtendedTable.svelte'
 
@@ -33,11 +34,13 @@ const getColumn = (nodeList) => {
 };
 
 test('sorting works properly', async () => {
+    resetSorting();
     const rows = JSON.parse(JSON.stringify(originalRows));
     const columnDefinition = JSON.parse(JSON.stringify(originalColumnDefinition));
     const { container, getByText } = render(ExtendedTable, {
         data: rows,
-        columns: columnDefinition
+        columns: columnDefinition,
+        sortingFunction: sortByColumn
     });
 
     const column2Headline = getByText('Column2');
@@ -54,15 +57,17 @@ test('sorting works properly', async () => {
 });
 
 test('sorting works properly reversed', async () => {
+    resetSorting();
+
     const rows = JSON.parse(JSON.stringify(originalRows));
     const columnDefinition = JSON.parse(JSON.stringify(originalColumnDefinition));
-    const { container, getByText } = render(ExtendedTable, {
+    const { container } = render(ExtendedTable, {
         data: rows,
-        columns: columnDefinition
+        columns: columnDefinition,
+        sortingFunction: sortByColumn
     });
 
-    const column2Headline = getByText('Column2');
-    expect(column2Headline).toBeInTheDocument();
+    const column2Headline = container.querySelector('.col-head-col2');
 
     const testColumn = container.querySelectorAll('.col-col2');
     expect(getColumn(testColumn)).toEqual(["xabc", "test", "zzz", "bla"]);
@@ -76,11 +81,13 @@ test('sorting works properly reversed', async () => {
 });
 
 test('sorting works properly with nested objects', async () => {
+    resetSorting();
     const rows = JSON.parse(JSON.stringify(originalRows));
     const columnDefinition = JSON.parse(JSON.stringify(originalColumnDefinition));
     const { container, getByText } = render(ExtendedTable, {
         data: rows,
-        columns: columnDefinition
+        columns: columnDefinition,
+        sortingFunction: sortByColumn
     });
 
     const column2Headline = getByText('Column1');
@@ -98,12 +105,14 @@ test('sorting works properly with nested objects', async () => {
 });
 
 test('multisort=false lets only sort one column', async () => {
+    resetSorting();
     const rows = JSON.parse(JSON.stringify(originalRows));
     const columnDefinition = JSON.parse(JSON.stringify(originalColumnDefinition));
     const { container, getByText } = render(ExtendedTable, {
         data: rows,
         columns: columnDefinition,
-        multisort: false
+        multisort: false,
+        sortingFunction: sortByColumn
     });
 
     const column2Headline = getByText('Column2');
@@ -120,13 +129,15 @@ test('multisort=false lets only sort one column', async () => {
 });
 
 test('initial sort works as expected', async () => {
+    resetSorting();
     const rows = JSON.parse(JSON.stringify(originalRows));
     const columnDefinition = JSON.parse(JSON.stringify(originalColumnDefinition));
     const { container, getByText } = render(ExtendedTable, {
         data: rows,
         columns: columnDefinition,
         initialSortBy: 'col2',
-        initialSortDirection: 'desc'
+        initialSortDirection: 'desc',
+        sortingFunction: sortByColumn
     });
 
     const testColumn = container.querySelectorAll('.col-col2');

@@ -37,7 +37,8 @@ test('expanding works properly', async () => {
     const columnDefinition = JSON.parse(JSON.stringify(originalColumnDefinition));
     const { container, getByText } = render(ExtendedTable, {
         data: rows,
-        columns: columnDefinition
+        columns: columnDefinition,
+        sortingFunction: () => {}
     });
 
     const column2Headline = container.querySelector('.col-head-col2');
@@ -62,7 +63,8 @@ test('expanding all columns works properly', async () => {
     const { container, getByText } = render(ExtendedTable, {
         data: rows,
         columns: columnDefinition,
-        expandAll: true
+        expandAll: true,
+        sortingFunction: () => {}
     });
 
     const column2Headline = container.querySelector('.col-head-col2');
@@ -84,7 +86,8 @@ test('expanding does not trigger sorting', async () => {
     const columnDefinition = JSON.parse(JSON.stringify(originalColumnDefinition));
     const { container, getByText } = render(ExtendedTable, {
         data: rows,
-        columns: columnDefinition
+        columns: columnDefinition,
+        sortingFunction: () => {}
     });
 
     const column2Headline = container.querySelector('.col-head-col2');

@@ -1,5 +1,5 @@
 <script>
-    import ExtendedTable from '../../src/ExtendedTable.svelte'
+    import ExtendedTable from '../../src/ExtendedTable.svelte';
 
     const rows = [
         { col1: {subprop: 1}, col2: "xabc", unrelated: "test1", col3: "hier ist zzz"},
@@ -26,8 +26,10 @@
     ];
 
     const getNewName = (val) => 'new-' + val;
+
+    const sortingFunction = () => {};
 </script>
 
-<ExtendedTable columns={columnDefinition} data={rows}>
+<ExtendedTable columns={columnDefinition} data={rows} sortingFunction={sortingFunction}>
     <div slot="column-2" let:data={row}>{getNewName(row.col2)}</div>
 </ExtendedTable>
