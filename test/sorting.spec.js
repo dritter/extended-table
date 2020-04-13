@@ -1,145 +1,68 @@
 import '@testing-library/jest-dom/extend-expect';
-import { render, fireEvent } from '@testing-library/svelte';
-import { sortByColumn, resetSorting } from '../src/sortBy';
+import {buildTable} from "./util";
 
-import ExtendedTable from '../src/ExtendedTable.svelte'
-
-const originalRows = [
-    { col1: {subprop: 1}, col2: "xabc", unrelated: "test1", col3: "hier ist zzz"},
-    { col1: {subprop: 2}, col2: "test", unrelated: "test2", col3: "hier ist zzzX"},
-    { col1: {subprop: 3}, col2: "zzz", unrelated: "test3", col3: "hier ist zzzA"},
-    { col1: {subprop: 4}, col2: "bla", unrelated: "test4", col3: "hier ist zzzT"},
-];
-
-let originalColumnDefinition = [
-    {
-        title: 'Column1',
-        propertyPath: 'col1.subprop',
-        sortable: true,
-    },
-    {
-        title: 'Column2',
-        propertyPath: 'col2',
-        sortable: true,
-    },
-    {
-        title: 'Column3',
-        propertyPath: 'col3',
-        sortable: true,
-    },
-];
-
-const getColumn = (nodeList) => {
-    return Array.prototype.map.call(nodeList, (element) => element.textContent.trim());
-};
+const sortableMods = [{sortable: true}, {sortable: true}, {sortable: true}];
 
 test('sorting works properly', async () => {
-    resetSorting();
-    const rows = JSON.parse(JSON.stringify(originalRows));
-    const columnDefinition = JSON.parse(JSON.stringify(originalColumnDefinition));
-    const { container, getByText } = render(ExtendedTable, {
-        data: rows,
-        columns: columnDefinition,
-        sortingFunction: sortByColumn
-    });
+    const table = buildTable({columnMods: sortableMods});
+    const column2 = table.columns[1];
+    expect(column2.getHeadline()).toEqual("Column2");
 
-    const column2Headline = getByText('Column2');
-    expect(column2Headline).toBeInTheDocument();
-
-    const testColumn = container.querySelectorAll('.col-col2');
-    expect(getColumn(testColumn)).toEqual(["xabc", "test", "zzz", "bla"]);
-
-    await fireEvent.click(column2Headline);
+    expect(column2.getValues()).toEqual(["xabc", "test", "zzz", "bla"]);
+    await column2.click();
 
     // Select again after resorting
-    const testColumnReselected = container.querySelectorAll('.col-col2');
-    expect(getColumn(testColumnReselected)).toEqual(["bla", "test", "xabc", "zzz"]);
+    expect(column2.getValues()).toEqual(["bla", "test", "xabc", "zzz"]);
 });
 
 test('sorting works properly reversed', async () => {
-    resetSorting();
+    const table = buildTable({columnMods: sortableMods});
+    const column2 = table.columns[1];
 
-    const rows = JSON.parse(JSON.stringify(originalRows));
-    const columnDefinition = JSON.parse(JSON.stringify(originalColumnDefinition));
-    const { container } = render(ExtendedTable, {
-        data: rows,
-        columns: columnDefinition,
-        sortingFunction: sortByColumn
-    });
+    expect(column2.getValues()).toEqual(["xabc", "test", "zzz", "bla"]);
 
-    const column2Headline = container.querySelector('.col-head-col2');
-
-    const testColumn = container.querySelectorAll('.col-col2');
-    expect(getColumn(testColumn)).toEqual(["xabc", "test", "zzz", "bla"]);
-
-    await fireEvent.click(column2Headline);
-    await fireEvent.click(column2Headline);
+    await column2.click();
+    await column2.click();
 
     // Select again after resorting
-    const testColumnReselected = container.querySelectorAll('.col-col2');
-    expect(getColumn(testColumnReselected)).toEqual(["zzz", "xabc", "test", "bla"]);
+    expect(column2.getValues()).toEqual(["zzz", "xabc", "test", "bla"]);
 });
 
 test('sorting works properly with nested objects', async () => {
-    resetSorting();
-    const rows = JSON.parse(JSON.stringify(originalRows));
-    const columnDefinition = JSON.parse(JSON.stringify(originalColumnDefinition));
-    const { container, getByText } = render(ExtendedTable, {
-        data: rows,
-        columns: columnDefinition,
-        sortingFunction: sortByColumn
-    });
+    const table = buildTable({columnMods: sortableMods});
 
-    const column2Headline = getByText('Column1');
-    expect(column2Headline).toBeInTheDocument();
+    const column1 = table.columns[0];
+    expect(column1.getHeadline()).toEqual('Column1');
+    expect(column1.getValues()).toEqual(["1", "2", "3", "4"]);
 
-    const testColumn = container.querySelectorAll('.col-col1_subprop');
-    expect(getColumn(testColumn)).toEqual(["1", "2", "3", "4"]);
-
-    await fireEvent.click(column2Headline);
-    await fireEvent.click(column2Headline);
+    await column1.click();
+    await column1.click();
 
     // Select again after resorting
-    const testColumnReselected = container.querySelectorAll('.col-col1_subprop');
-    expect(getColumn(testColumnReselected)).toEqual(["4", "3", "2", "1"]);
+    expect(column1.getValues()).toEqual(["4", "3", "2", "1"]);
 });
 
 test('multisort=false lets only sort one column', async () => {
-    resetSorting();
-    const rows = JSON.parse(JSON.stringify(originalRows));
-    const columnDefinition = JSON.parse(JSON.stringify(originalColumnDefinition));
-    const { container, getByText } = render(ExtendedTable, {
-        data: rows,
-        columns: columnDefinition,
-        multisort: false,
-        sortingFunction: sortByColumn
-    });
+    const table = buildTable({columnMods: sortableMods, props: {multisort: false}});
 
-    const column2Headline = getByText('Column2');
-    expect(column2Headline).toBeInTheDocument();
+    const column2 = table.columns[1];
+    expect(column2.getHeadline()).toEqual('Column2');
 
-    const testColumn = container.querySelectorAll('.col-col1_subprop');
-    expect(getColumn(testColumn)).toEqual(["1", "2", "3", "4"]);
+    const testColumn = table.columns[0];
+    expect(testColumn.getValues()).toEqual(["1", "2", "3", "4"]);
 
-    await fireEvent.click(column2Headline);
+    await column2.click();
 
     // Select again after resorting
-    const testColumnReselected = container.querySelectorAll('.col-col1_subprop');
-    expect(getColumn(testColumnReselected)).toEqual(["4", "2", "1", "3"]);
+    expect(testColumn.getValues()).toEqual(["4", "2", "1", "3"]);
 });
 
 test('initial sort works as expected', async () => {
-    resetSorting();
-    const rows = JSON.parse(JSON.stringify(originalRows));
-    const columnDefinition = JSON.parse(JSON.stringify(originalColumnDefinition));
-    const { container, getByText } = render(ExtendedTable, {
-        data: rows,
-        columns: columnDefinition,
-        initialSortBy: 'col2',
-        initialSortDirection: 'desc',
-        sortingFunction: sortByColumn
+    const table = buildTable({
+        columnMods: sortableMods,
+        props: {initialSortBy: 'col2', initialSortDirection: 'desc'}
     });
 
-    const testColumn = container.querySelectorAll('.col-col2');
-    expect(getColumn(testColumn)).toEqual(["zzz", "xabc", "test", "bla"]);
+    const testColumn = table.columns[1];
+    expect(testColumn.getValues()).toEqual(["zzz", "xabc", "test", "bla"]);
 });
