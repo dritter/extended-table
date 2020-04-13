@@ -1,7 +1,6 @@
 <script>
     import { onMount } from 'svelte';
     import { deepValue } from '@jsier/deep-value';
-    import stickybits from 'stickybits/dist/stickybits.es';
     import { sortByDefinition } from './sortBy';
 
     export let data = [];
@@ -40,7 +39,11 @@
     onMount(() => {
         let heads = table.querySelectorAll('thead th');
         if (stickyHeaders) {
-            stickybits(heads, {stickyBitStickyOffset: stickyOffset});
+            (async () => {
+                const importObj = await import('stickybits/dist/stickybits.es');
+                const stickybits = importObj.default;
+                stickybits(heads, {stickyBitStickyOffset: stickyOffset});
+            })();
         }
 
         if (autoCollapse) {
