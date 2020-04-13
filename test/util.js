@@ -1,6 +1,6 @@
 import {fireEvent, render} from "@testing-library/svelte";
 import ExtendedTable from "../src/ExtendedTable.svelte";
-
+import { sortByColumn, resetSorting } from '../src/sortBy';
 
 const defaultRows = [
     { col1: {subprop: 1}, col2: "xabc", unrelated: "test1", col3: "hier ist zzz"},
@@ -27,9 +27,10 @@ let defaultColumns = [
 const freshCopy = (obj) => JSON.parse(JSON.stringify(obj));
 
 export const buildTable = (config) => {
+    resetSorting();
     config = config || {};
     config.props = config.props || {};
-    !config.props.sortingFunction ? config.props.sortingFunction = () => {} : true;
+    !config.props.sortingFunction ? config.props.sortingFunction = sortByColumn : true;
 
     let columns = config.columns || freshCopy(defaultColumns);
     let rows = config.rows || freshCopy(defaultRows);
