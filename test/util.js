@@ -17,12 +17,10 @@ let defaultColumns = [
     {
         title: 'Column2',
         propertyPath: 'col2',
-        collapsed: true
     },
     {
         title: 'Column3',
         propertyPath: 'col3',
-        collapsed: true
     },
 ];
 
@@ -35,6 +33,12 @@ export const buildTable = (config) => {
 
     let columns = config.columns || freshCopy(defaultColumns);
     let rows = config.rows || freshCopy(defaultRows);
+
+    if (config.columnMods) {
+        config.columnMods.forEach((mod, index) => {
+            Object.assign(columns[index], mod);
+        })
+    }
 
     const { container } = render(ExtendedTable, {
         data: rows,

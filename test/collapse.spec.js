@@ -1,8 +1,10 @@
 import '@testing-library/jest-dom/extend-expect';
 import { buildTable } from './util';
 
+const mods = [{}, {collapsed: true}, {collapsed: true}];
+
 test('expanding works properly', async () => {
-    const table = buildTable();
+    const table = buildTable({columnMods: mods});
 
     const column2Headline = table.columns[1];
     expect(column2Headline.getHeadline()).toEqual('...');
@@ -15,7 +17,7 @@ test('expanding works properly', async () => {
 });
 
 test('expanding all columns works properly', async () => {
-    const table = buildTable({props: {expandAll: true}});
+    const table = buildTable({columnMods: mods, props: {expandAll: true}});
 
     const column2Headline = table.columns[1];
     expect(column2Headline.getHeadline()).toEqual('...');
@@ -30,7 +32,7 @@ test('expanding all columns works properly', async () => {
 });
 
 test('expanding does not trigger sorting', async () => {
-    const table = buildTable();
+    const table = buildTable({columnMods: mods});
 
     const column2Headline = table.columns[1];
 
