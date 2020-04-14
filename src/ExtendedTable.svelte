@@ -1,7 +1,6 @@
 <script>
     import { onMount } from 'svelte';
     import { deepValue } from '@jsier/deep-value';
-    import { sortByDefinition } from './sortBy';
 
     export let data = [];
     export let columns = [];
@@ -76,16 +75,20 @@
     });
 
     if (initialSortBy) {
-        if (showSortIndicatorsOnInitialSort) {
-            const initialSortColumn = columns.find((c) => c.propertyPath === initialSortBy);
-            initialSortColumn.propertyPath = initialSortBy;
-            initialSortColumn.direction = initialSortDirection;
-        }
-        const def = {};
-        def[initialSortDirection] = (u) => {
-            return deepValue(u, initialSortBy);
-        };
-        sortByDefinition(data, [def]);
+        (async () => {
+            const importObj = await import('./sortBy');
+            const sortByDefinition = importObj.sortByDefinition;
+            if (showSortIndicatorsOnInitialSort) {
+                const initialSortColumn = columns.find((c) => c.propertyPath === initialSortBy);
+                initialSortColumn.propertyPath = initialSortBy;
+                initialSortColumn.direction = initialSortDirection;
+            }
+            const def = {};
+            def[initialSortDirection] = (u) => {
+                return deepValue(u, initialSortBy);
+            };
+            sortByDefinition(data, [def]);
+        })();
     }
 
     const expandColumn = (column) => {
