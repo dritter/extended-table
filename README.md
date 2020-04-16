@@ -148,10 +148,3 @@ Currently there are three dependencies:
   - [deep-value](https://github.com/seidme/jsier/tree/master/deep-value) for
     propertyPath resolution
   - [stickybits](https://github.com/yowainwright/stickybits) for sticky headers
-
-## TODO
-
-This component is still not done. There are some open points:
-  - [ ] Perfomance Testing
-  - [ ] Create NPM package
-  - [ ] Add WAI-ARIA attributes
