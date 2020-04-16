@@ -2,10 +2,11 @@
     import ExtendedTable from "../../src/ExtendedTable.svelte";
     import {default as originalData} from '../../fixtures/fixtures.json';
     import Pagination from "./Pagination.svelte";
-    import { filter } from './rowFilter';
+    import {filter} from './rowFilter';
     import ThemeSwitch from "./ThemeSwitch.svelte";
 
-    import { sortByColumn } from "../../src/sortBy";
+    import {sortByColumn} from "../../src/sortBy";
+    import ColumnFilter from "./ColumnFilter.svelte";
 
     let columnDefinition = [
         {
@@ -110,6 +111,7 @@
     let theme = "light";
 </script>
 
+<ThemeSwitch bind:theme={theme} />
 <div>
     Filter
     <select bind:value={filterProp}>
@@ -126,7 +128,8 @@
         Attention: In this example, filter is only applied to the propertyPath (not on combined columns).
     {/if}
 </div>
-<ThemeSwitch bind:theme={theme} />
+<ColumnFilter bind:columns={columnDefinition} />
+
 <div style="
         --theme-background-color: {theme === 'light' ? '#ffffff' : '#7f8c8d'};
         --theme-headline-background-color: {theme === 'light' ? '#ffffff' : '#34495e'};
