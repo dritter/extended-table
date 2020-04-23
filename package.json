@@ -5,8 +5,9 @@
   "main": "./src/ExtendedTable.svelte",
   "svelte": "./src/ExtendedTable.svelte",
   "scripts": {
-    "test": "jest test",
-    "test:watch": "npm run test -- --watch"
+    "test": "jest test --testPathIgnorePatterns=performance",
+    "test:watch": "npm run test -- --watch",
+    "test:performance":  "node_modules/.bin/jest ./test/performance/"
   },
   "repository": {
     "type": "git",

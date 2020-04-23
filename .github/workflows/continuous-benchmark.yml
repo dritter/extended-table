@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
       - name: Run benchmark
-        run: npm install && node bench.js | tee test/performance/output.txt
+        run: npm install && npm run test:performance | tee test/performance/output.txt
       - name: Store benchmark result
         uses: rhysd/github-action-benchmark@v1
         with:
