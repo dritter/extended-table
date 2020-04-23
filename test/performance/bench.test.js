@@ -11,6 +11,8 @@ const sortableMods = [{sortable: true}, {sortable: true}, {sortable: true}];
 
 const log = fs.openSync('./test/performance/output.txt', 'a')
 
+jest.setTimeout(90 * 1000);
+
 /**
  * Artificial test, because we run the benchmarks in
  * jest, so that jest-babel handles all the
