@@ -12,8 +12,6 @@ const sortableMods = [{sortable: true}, {sortable: true}, {sortable: true}];
 const log = fs.openSync('./test/performance/output.txt', 'a')
 
 /**
- * @jest-environment jsdom
- *
  * Artificial test, because we run the benchmarks in
  * jest, so that jest-babel handles all the
  * compiling of svelte and ESM modules for us.

@@ -7,7 +7,7 @@
   "scripts": {
     "test": "jest test --testPathIgnorePatterns=performance",
     "test:watch": "npm run test -- --watch",
-    "test:performance": "node_modules/.bin/jest --env=jsdom ./test/performance/"
+    "test:performance": "node_modules/.bin/jest --env=node ./test/performance/"
   },
   "repository": {
     "type": "git",
