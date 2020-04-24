@@ -19,6 +19,8 @@ jest.setTimeout(90 * 1000);
  * compiling of svelte and ESM modules for us.
  */
 test('test', (done) => {
+    Benchmark.options.onComplete = done;
+
     suite
         .add('default rendering', () => {
             buildTable({columnMods: sortableMods});
@@ -37,5 +39,5 @@ test('test', (done) => {
         .on('cycle', (event) => {
             fs.appendFileSync(log, String(event.target));
         })
-        .run({ async: true, onComplete: done });
+        .run({ async: true });
 });
