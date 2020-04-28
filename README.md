@@ -1,6 +1,7 @@
 # ExtendedTable
 
 ![Node.js CI](https://github.com/dritter/extended-table/workflows/Node.js%20CI/badge.svg)
+![Performance Tests](https://github.com/dritter/extended-table/workflows/Continuous%20Performance%20Tests/badge.svg)
 
 ## Usage
 
