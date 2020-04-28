@@ -149,3 +149,7 @@ Currently there are three dependencies:
   - [deep-value](https://github.com/seidme/jsier/tree/master/deep-value) for
     propertyPath resolution
   - [stickybits](https://github.com/yowainwright/stickybits) for sticky headers
+
+## Benchmarks
+
+[See here](https://dritter.github.io/extended-table/dev/bench/)
