@@ -7,6 +7,7 @@ jobs:
   benchmark:
     name: Run benchmark.js
     runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'add Benchmark.js Benchmark (benchmarkjs) benchmark result')"
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
