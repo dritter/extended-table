@@ -1,6 +1,7 @@
 import {render} from "@testing-library/svelte";
 import '@testing-library/jest-dom/extend-expect';
 import * as Benchmark from 'benchmark';
+
 const suite = new Benchmark.Suite('ExtendedTable-Performance');
 
 import * as fs from 'fs';
@@ -13,13 +14,18 @@ const log = fs.openSync('./test/performance/output.txt', 'a')
 
 jest.setTimeout(90 * 1000);
 
+// Set Benchmark into the JSDOM window object
+window.Benchmark = Benchmark;
+
 /**
  * Artificial test, because we run the benchmarks in
  * jest, so that jest-babel handles all the
  * compiling of svelte and ESM modules for us.
  */
 test('test', (done) => {
-    Benchmark.options.onComplete = done;
+    // Create fake script tag to overcome crappy benchmarkjs code...
+    let script = document.createElement('script');
+    document.body.appendChild(script);
 
     suite
         .add('default rendering', () => {
@@ -37,7 +43,8 @@ test('test', (done) => {
             })();
         })
         .on('cycle', (event) => {
-            fs.appendFileSync(log, String(event.target));
+            fs.appendFileSync(log, String(event.target) + "\n");
         })
+        .on('complete', () => done())
         .run({ async: true });
 });
