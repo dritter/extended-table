@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1588108260258,
+  "lastUpdate": 1588108329176,
   "repoUrl": "https://github.com/dritter/extended-table",
   "entries": {
     "Benchmark.js Benchmark": [
@@ -88,6 +88,49 @@ window.BENCHMARK_DATA = {
             "range": "±13.61%",
             "unit": "ops/sec",
             "extra": "37 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "github@users.noreply.github.com",
+            "name": "github-action-benchmark"
+          },
+          "committer": {
+            "email": "github@users.noreply.github.com",
+            "name": "github-action-benchmark"
+          },
+          "distinct": true,
+          "id": "b1cb2440ed8eeea1e3622f213876f8a4fbb9aab9",
+          "message": "add Benchmark.js Benchmark (benchmarkjs) benchmark result for b43f3868734c41f75fc56110c372d8e298c283b1",
+          "timestamp": "2020-04-28T21:11:00Z",
+          "tree_id": "405cbbb2a53938ff8d6e7175039bdc5885422e8d",
+          "url": "https://github.com/dritter/extended-table/commit/b1cb2440ed8eeea1e3622f213876f8a4fbb9aab9"
+        },
+        "date": 1588108329149,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "default rendering",
+            "value": 122,
+            "range": "±8.71%",
+            "unit": "ops/sec",
+            "extra": "62 samples"
+          },
+          {
+            "name": "slot rendering",
+            "value": 126,
+            "range": "±6.74%",
+            "unit": "ops/sec",
+            "extra": "52 samples"
+          },
+          {
+            "name": "sorting",
+            "value": 18.41,
+            "range": "±3.46%",
+            "unit": "ops/sec",
+            "extra": "30 samples"
           }
         ]
       }
