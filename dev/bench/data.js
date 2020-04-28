@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1588109645817,
+  "lastUpdate": 1588110353832,
   "repoUrl": "https://github.com/dritter/extended-table",
   "entries": {
     "Benchmark.js Benchmark": [
@@ -176,6 +176,51 @@ window.BENCHMARK_DATA = {
             "range": "±2.49%",
             "unit": "ops/sec",
             "extra": "38 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dritter03@googlemail.com",
+            "name": "Dominik Ritter",
+            "username": "dritter"
+          },
+          "committer": {
+            "email": "dritter03@googlemail.com",
+            "name": "Dominik Ritter",
+            "username": "dritter"
+          },
+          "distinct": true,
+          "id": "a53f534dc0d85e71937fde7f9678ef37a5a4ef11",
+          "message": "Add link to benchmarks",
+          "timestamp": "2020-04-28T23:40:11+02:00",
+          "tree_id": "874062a9cd51b8b5ed53f1713c8882558c9dac29",
+          "url": "https://github.com/dritter/extended-table/commit/a53f534dc0d85e71937fde7f9678ef37a5a4ef11"
+        },
+        "date": 1588110353815,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "default rendering",
+            "value": 118,
+            "range": "±7.57%",
+            "unit": "ops/sec",
+            "extra": "62 samples"
+          },
+          {
+            "name": "slot rendering",
+            "value": 122,
+            "range": "±7.15%",
+            "unit": "ops/sec",
+            "extra": "53 samples"
+          },
+          {
+            "name": "sorting",
+            "value": 16.53,
+            "range": "±2.85%",
+            "unit": "ops/sec",
+            "extra": "37 samples"
           }
         ]
       }
