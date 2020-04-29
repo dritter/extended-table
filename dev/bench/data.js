@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1588110353832,
+  "lastUpdate": 1588192478602,
   "repoUrl": "https://github.com/dritter/extended-table",
   "entries": {
     "Benchmark.js Benchmark": [
@@ -221,6 +221,51 @@ window.BENCHMARK_DATA = {
             "range": "±2.85%",
             "unit": "ops/sec",
             "extra": "37 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dritter03@googlemail.com",
+            "name": "Dominik Ritter",
+            "username": "dritter"
+          },
+          "committer": {
+            "email": "dritter03@googlemail.com",
+            "name": "Dominik Ritter",
+            "username": "dritter"
+          },
+          "distinct": true,
+          "id": "356e90568cff6b47e3c89b066b936561c51d7b32",
+          "message": "Add workflow to publish releases to NPM",
+          "timestamp": "2020-04-29T22:33:26+02:00",
+          "tree_id": "3b809ea9de693125059d26d7cc5530a9f6b8377b",
+          "url": "https://github.com/dritter/extended-table/commit/356e90568cff6b47e3c89b066b936561c51d7b32"
+        },
+        "date": 1588192478586,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "default rendering",
+            "value": 172,
+            "range": "±10.43%",
+            "unit": "ops/sec",
+            "extra": "62 samples"
+          },
+          {
+            "name": "slot rendering",
+            "value": 173,
+            "range": "±7.83%",
+            "unit": "ops/sec",
+            "extra": "53 samples"
+          },
+          {
+            "name": "sorting",
+            "value": 15.28,
+            "range": "±3.51%",
+            "unit": "ops/sec",
+            "extra": "35 samples"
           }
         ]
       }
