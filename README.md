@@ -142,6 +142,10 @@ are:
   - `multisort` (boolean) - `true`, if sorting for multiple columns is enabled
   - `clearCacheCallback` (function) - Callback to clear the caches
 
+## Troubleshooting
+
+See [Troubleshooting Guide](TROUBLESHOOTING.md).
+
 ## Dependencies
 
 Currently there are three dependencies:
