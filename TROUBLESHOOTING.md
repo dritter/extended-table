@@ -5,7 +5,7 @@
 <details>
   <summary>This may happen if you render the table prematurely.</summary>
   
-    Does not work:
+Does not work:
 ```html
 <script>
 import { onMount } from 'svelte';
@@ -20,7 +20,7 @@ onMount(async () => {
 <ExtendedTable columns={columns} data={rows}></ExtendedTable>
 ```
     
-    Works:
+Works:
 ```html
 <script>
 let columns = [{title: 'first'}, {title: 'second'}];
