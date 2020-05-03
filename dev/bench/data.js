@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1588498406135,
+  "lastUpdate": 1588499231325,
   "repoUrl": "https://github.com/dritter/extended-table",
   "entries": {
     "Benchmark.js Benchmark": [
@@ -401,6 +401,51 @@ window.BENCHMARK_DATA = {
             "range": "±2.84%",
             "unit": "ops/sec",
             "extra": "37 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dritter03@googlemail.com",
+            "name": "Dominik Ritter",
+            "username": "dritter"
+          },
+          "committer": {
+            "email": "dritter03@googlemail.com",
+            "name": "Dominik Ritter",
+            "username": "dritter"
+          },
+          "distinct": true,
+          "id": "e1e9289e95f507d751ee5cbdaa3241f33e524f04",
+          "message": "Improve markdown formatting",
+          "timestamp": "2020-05-03T11:46:02+02:00",
+          "tree_id": "16194e980de38603cb0058e9154ff885326ef5e0",
+          "url": "https://github.com/dritter/extended-table/commit/e1e9289e95f507d751ee5cbdaa3241f33e524f04"
+        },
+        "date": 1588499231272,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "default rendering",
+            "value": 154,
+            "range": "±10.82%",
+            "unit": "ops/sec",
+            "extra": "64 samples"
+          },
+          {
+            "name": "slot rendering",
+            "value": 157,
+            "range": "±8.11%",
+            "unit": "ops/sec",
+            "extra": "53 samples"
+          },
+          {
+            "name": "sorting",
+            "value": 15.89,
+            "range": "±2.89%",
+            "unit": "ops/sec",
+            "extra": "35 samples"
           }
         ]
       }
