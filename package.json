@@ -5,7 +5,7 @@
   "main": "./src/ExtendedTable.svelte",
   "svelte": "./src/ExtendedTable.svelte",
   "scripts": {
-    "test": "jest test --testPathIgnorePatterns=performance",
+    "test": "jest test --testPathIgnorePatterns=performance --coverage",
     "test:watch": "npm run test -- --watch",
     "test:performance": "node_modules/.bin/jest --env=jsdom ./test/performance/"
   },
