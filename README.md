@@ -48,7 +48,7 @@ In case you want to allow sorting only one column, you need to set
 ### Flexible Rendering
 
 The easiest way to render a column is to provide a `propertyPath`. This could
-even be in nested Object. Have a look at [deep-value](https://github.com/seidme/jsier/tree/master/deep-value#usage)
+even be in a nested Object. Have a look at [deep-value](https://github.com/seidme/jsier/tree/master/deep-value#usage)
 to see more ways how to express paths.
 
 To render slightly more complex data you could specify `value`, that needs to
