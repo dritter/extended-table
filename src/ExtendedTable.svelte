@@ -6,6 +6,7 @@
 
     export let data = [];
     export let columns = [];
+    export let rows = [];
     const defaultRowClickHandler = (row) => true;
     export let onRowClick = defaultRowClickHandler;
 
@@ -113,21 +114,41 @@
         return input.replace(slugEx, '_');
     };
 
-    const getColumnClasses = (index, propertyPath) => {
-        let classes = [];
-        propertyPath && classes.push(sluggify(propertyPath));
+    const getColumnClasses = (index, column, data) => {
+        const classes = [];
+        column.propertyPath && classes.push(sluggify(column.propertyPath));
+        typeof data.className === 'string' && classes.push(data.className);
+
+        if (typeof column.className === 'object') {
+            typeof column.className.value === 'function' && classes.push(column.className.value(data, column, index));
+            column.className.propertyPath && classes.push(deepValue(data, column.className.propertyPath));
+        }
 
         return getClasses(classes, index, 'col');
     };
 
-    const getRowClasses = (index) => {
-        return getClasses([], index, 'row');
+    const getRowClasses = (index, rows, data) => {
+        const classes = [];
+
+        const row = rows[index % rows.length] || {};
+        typeof row.className === 'string' && classes.push(row.className);
+        if (typeof row.className === 'object') {
+            typeof row.className.value === 'function' && classes.push(row.className.value(data, row, index));
+            row.className.propertyPath && classes.push(deepValue(data, row.className.propertyPath));
+        }
+
+        return getClasses(classes, index, 'row');
     };
 
-    const getHeadlineClasses = (column) => {
+    const getHeadlineClasses = (index, column) => {
         let classes = [];
         column.sortable && classes.push('mouse-pointer');
         column.propertyPath && classes.push('col-head-' + sluggify(column.propertyPath));
+        typeof column.className === 'string' && classes.push(column.className);
+
+        if (typeof column.className === 'object') {
+            typeof column.className.value === 'function' && classes.push(column.className.value(column, index));
+        }
 
         return classes.join(" ");
     };
@@ -184,8 +205,8 @@
 <table bind:this={table} class="et">
     <thead>
         <tr>
-            {#each columns as column}
-                <th on:click={() => sortingFunction(column, columns, data, multisort, clearCaches)} class="{getHeadlineClasses(column)}" class:hidden={column.hidden}>
+            {#each columns as column, columnHeaderIndex}
+                <th on:click={() => sortingFunction(column, columns, data, multisort, clearCaches)} class="{getHeadlineClasses(columnHeaderIndex, column)}" class:hidden={column.hidden}>
                     {#if column.collapsed}
                         <div on:click|stopPropagation={expandColumn(column)}>
                             {@html collapsedPlaceholder}
@@ -205,10 +226,10 @@
     </thead>
     <tbody>
         {#each data as d, rowIndex}
-            <tr on:click={() => onRowClick(d)} class="{getRowClasses(rowIndex)}" class:mouse-pointer={onRowClick !== defaultRowClickHandler}>
+            <tr on:click={() => onRowClick(d)} class="{getRowClasses(rowIndex, rows, d)}" class:mouse-pointer={onRowClick !== defaultRowClickHandler}>
                 {#each columns as column, columnIndex}
                     {#if column.clickHandler}
-                        <td on:click|stopPropagation={() => column.clickHandler(d)}  class="{getColumnClasses(columnIndex, column.propertyPath)}"  class:hidden={column.hidden}>
+                        <td on:click|stopPropagation={() => column.clickHandler(d)}  class="{getColumnClasses(columnIndex, column, d)}"  class:hidden={column.hidden}>
                             {#if column.collapsed}
                                 <div class="mouse-pointer" on:click|stopPropagation={expandColumn(column)}>
                                     {@html collapsedPlaceholder}
@@ -264,7 +285,7 @@
                             {/if}
                         </td>
                     {:else}
-                        <td class="{getColumnClasses(columnIndex, column.propertyPath)}" class:hidden={column.hidden}>
+                        <td class="{getColumnClasses(columnIndex, column, d)}" class:hidden={column.hidden}>
                             {#if column.collapsed}
                                 <div class="mouse-pointer" on:click|stopPropagation={expandColumn(column)}>
                                     {@html collapsedPlaceholder}
