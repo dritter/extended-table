@@ -75,4 +75,13 @@ Theme
     div :global(.col-location_postcode) {
         transform: rotate(-45deg);
     }
+
+    div :global(.success.goldenkoala410) {
+        background-color: #2793da;
+    }
+
+    div :global(tr.success),
+    div :global(td.beautifulkoala361) {
+        background-color: #006600;
+    }
 </style>
