@@ -6,17 +6,31 @@
         {
             title: 'Username',
             propertyPath: 'username',
+            headerClassName: 'headline__username',
         },
         {
             title: 'Name',
             value: (rowData) => `${rowData.title} ${rowData.first_name} ${rowData.last_name}`,
             propertyPath: 'last_name',
+            className: {
+                propertyPath: 'username',
+                value: (rowData, column, columnIndex, rowIndex) => rowData.username === 'goldenkoala410' ? 'success' : '',
+            }
         },
         {
             title: 'Location',
             propertyPath: 'location.postcode',
             value: (rowData) => `${rowData.location.postcode} ${rowData.location.state} ${rowData.location.city}`,
+            headerClassName: {
+                value: (columnDefinition) => columnDefinition.propertyPath + '-TEST',
+            }
         },
+    ];
+
+    let rowDefinition = [
+        {className: {propertyPath: 'location.postcode'}},
+        {className: {propertyPath: 'username', value: (data, row, rowIndex) => data.last_name}},
+        {className: {value: (data, row, rowIndex) => (rowIndex + 1) % 2 === 0 ? 'success' : ''}},
     ];
 
     let rows = data.slice(0, 10);
@@ -38,7 +52,7 @@ Theme
         --theme-headline-background-color: {theme === 'light' ? '#ffffff' : '#34495e'};
         --theme-text-color: {theme === 'light' ? '#34495e' : '#ecf0f1'};
 ">
-    <ExtendedTable columns={columnDefinition} data={rows}></ExtendedTable>
+    <ExtendedTable columns={columnDefinition} data={rows} rows={rowDefinition}></ExtendedTable>
 </div>
 
 <style>
