@@ -143,10 +143,10 @@
         let classes = [];
         column.sortable && classes.push('mouse-pointer');
         column.propertyPath && classes.push('col-head-' + sluggify(column.propertyPath));
-        typeof column.className === 'string' && classes.push(column.className);
+        typeof column.headerClassName === 'string' && classes.push(column.headerClassName);
 
-        if (typeof column.className === 'object') {
-            typeof column.className.value === 'function' && classes.push(column.className.value(column, index));
+        if (typeof column.headerClassName === 'object') {
+            typeof column.headerClassName.value === 'function' && classes.push(column.headerClassName.value(column, index));
         }
 
         return classes.join(' ');
