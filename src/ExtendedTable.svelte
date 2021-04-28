@@ -117,8 +117,10 @@
         typeof column.className === 'string' && classes.push(column.className);
 
         if (typeof column.className === 'object') {
-            typeof column.className.value === 'function' && classes.push(column.className.value(data, column, columnIndex, rowIndex));
-            column.className.propertyPath && classes.push(deepValue(data, column.className.propertyPath));
+            typeof column.className.value === 'function' && classes.push(
+                sluggify(column.className.value(data, column, columnIndex, rowIndex))
+            );
+            column.className.propertyPath && classes.push(sluggify(deepValue(data, column.className.propertyPath)));
         }
         classes.push(getOddEvenClass(columnIndex, 'col'));
 
@@ -131,8 +133,8 @@
         const row = rows[index % rows.length] || {};
         typeof row.className === 'string' && classes.push(row.className);
         if (typeof row.className === 'object') {
-            typeof row.className.value === 'function' && classes.push(row.className.value(data, row, index));
-            row.className.propertyPath && classes.push(deepValue(data, row.className.propertyPath));
+            typeof row.className.value === 'function' && classes.push(sluggify(row.className.value(data, row, index)));
+            row.className.propertyPath && classes.push(sluggify(deepValue(data, row.className.propertyPath)));
         }
         classes.push(getOddEvenClass(index, 'row'));
 
@@ -146,7 +148,9 @@
         typeof column.headerClassName === 'string' && classes.push(column.headerClassName);
 
         if (typeof column.headerClassName === 'object') {
-            typeof column.headerClassName.value === 'function' && classes.push(column.headerClassName.value(column, index));
+            typeof column.headerClassName.value === 'function' && classes.push(
+                sluggify(column.headerClassName.value(column, index))
+            );
         }
 
         return classes.join(' ');
