@@ -108,6 +108,9 @@
 
     const slugEx = new RegExp(/[^a-z0-9]/g);
     const sluggify = (input) => {
+        if (!input) {
+            return
+        }
         return ("" + input).replace(slugEx, '_');
     };
 
