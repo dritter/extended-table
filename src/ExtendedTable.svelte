@@ -98,15 +98,12 @@
         clearCaches();
     };
 
-    const getClasses = (classes, index, prefix) => {
+    const getOddEvenClass = (index, prefix) => {
         if (index % 2 === 0) {
-            classes.push('even');
-        } else {
-            classes.push('odd');
+            return `${prefix}-even`;
         }
 
-        return classes.map((c) => prefix + '-' + c)
-            .join(" ");
+        return `${prefix}-odd`;
     };
 
     const slugEx = new RegExp(/[^a-z0-9]/g);
@@ -114,17 +111,18 @@
         return input.replace(slugEx, '_');
     };
 
-    const getColumnClasses = (index, column, data) => {
+    const getCellClasses = (columnIndex, rowIndex, column, data) => {
         const classes = [];
-        column.propertyPath && classes.push(sluggify(column.propertyPath));
-        typeof data.className === 'string' && classes.push(data.className);
+        column.propertyPath && classes.push(`col-${sluggify(column.propertyPath)}`);
+        typeof column.className === 'string' && classes.push(column.className);
 
         if (typeof column.className === 'object') {
-            typeof column.className.value === 'function' && classes.push(column.className.value(data, column, index));
+            typeof column.className.value === 'function' && classes.push(column.className.value(data, column, columnIndex, rowIndex));
             column.className.propertyPath && classes.push(deepValue(data, column.className.propertyPath));
         }
+        classes.push(getOddEvenClass(columnIndex, 'col'));
 
-        return getClasses(classes, index, 'col');
+        return classes.join(' ');
     };
 
     const getRowClasses = (index, rows, data) => {
@@ -136,8 +134,9 @@
             typeof row.className.value === 'function' && classes.push(row.className.value(data, row, index));
             row.className.propertyPath && classes.push(deepValue(data, row.className.propertyPath));
         }
+        classes.push(getOddEvenClass(index, 'row'));
 
-        return getClasses(classes, index, 'row');
+        return classes.join(' ');
     };
 
     const getHeadlineClasses = (index, column) => {
@@ -150,7 +149,7 @@
             typeof column.className.value === 'function' && classes.push(column.className.value(column, index));
         }
 
-        return classes.join(" ");
+        return classes.join(' ');
     };
 
     let slots = new Set($$props.$$slots ? Object.getOwnPropertyNames($$props.$$slots) : []);
@@ -229,7 +228,7 @@
             <tr on:click={() => onRowClick(d)} class="{getRowClasses(rowIndex, rows, d)}" class:mouse-pointer={onRowClick !== defaultRowClickHandler}>
                 {#each columns as column, columnIndex}
                     {#if column.clickHandler}
-                        <td on:click|stopPropagation={() => column.clickHandler(d)}  class="{getColumnClasses(columnIndex, column, d)}"  class:hidden={column.hidden}>
+                        <td on:click|stopPropagation={() => column.clickHandler(d)}  class="{getCellClasses(columnIndex, rowIndex, column, d)}"  class:hidden={column.hidden}>
                             {#if column.collapsed}
                                 <div class="mouse-pointer" on:click|stopPropagation={expandColumn(column)}>
                                     {@html collapsedPlaceholder}
@@ -285,7 +284,7 @@
                             {/if}
                         </td>
                     {:else}
-                        <td class="{getColumnClasses(columnIndex, column, d)}" class:hidden={column.hidden}>
+                        <td class="{getCellClasses(columnIndex, rowIndex, column, d)}" class:hidden={column.hidden}>
                             {#if column.collapsed}
                                 <div class="mouse-pointer" on:click|stopPropagation={expandColumn(column)}>
                                     {@html collapsedPlaceholder}
