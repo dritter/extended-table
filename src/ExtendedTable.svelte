@@ -108,7 +108,7 @@
 
     const slugEx = new RegExp(/[^a-z0-9]/g);
     const sluggify = (input) => {
-        return input.replace(slugEx, '_');
+        return ("" + input).replace(slugEx, '_');
     };
 
     const getCellClasses = (columnIndex, rowIndex, column, data) => {
