@@ -106,7 +106,7 @@
         return `${prefix}-odd`;
     };
 
-    const slugEx = new RegExp(/[^a-z0-9]/g);
+    const slugEx = new RegExp(/[^a-z0-9\-]/ig);
     const sluggify = (input) => {
         if (!input) {
             return
