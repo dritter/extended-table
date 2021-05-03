@@ -6,7 +6,7 @@
 
     export let data = [];
     export let columns = [];
-    export let rows = [];
+    export let rollingRowCssClasses = [];
     const defaultRowClickHandler = (row) => true;
     export let onRowClick = defaultRowClickHandler;
 
@@ -232,7 +232,7 @@
     </thead>
     <tbody>
         {#each data as d, rowIndex}
-            <tr on:click={() => onRowClick(d)} class="{getRowClasses(rowIndex, rows, d)}" class:mouse-pointer={onRowClick !== defaultRowClickHandler}>
+            <tr on:click={() => onRowClick(d)} class="{getRowClasses(rowIndex, rollingRowCssClasses, d)}" class:mouse-pointer={onRowClick !== defaultRowClickHandler}>
                 {#each columns as column, columnIndex}
                     {#if column.clickHandler}
                         <td on:click|stopPropagation={() => column.clickHandler(d)}  class="{getCellClasses(columnIndex, rowIndex, column, d)}"  class:hidden={column.hidden}>

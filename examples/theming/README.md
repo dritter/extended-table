@@ -32,13 +32,13 @@ Written on the `column` prop Object as `headerClassName`, which may be a static 
 
 #### Row CSS Classes
 
-Since Version `1.1.0` there is a new prop `rows` that take the row definition (Array of Objects). This is used to write the desired CSS Classes only and differs from the column definition in the way that this definition is applied rolling.
+Since Version `1.1.0` there is a new prop `rollingRowCssClasses` that take the row definition (Array of Objects). This is used to write the desired CSS Classes only and differs from the column definition in the way that this definition is applied rolling.
 As before, the `className` may be a static String, or an Object. Other than for Headlines, the `className` may have a `propertyPath` that is resolved on the data.
 The arguments for the `value` callback are as follows: `data` the current data Object; `row` the current row definition (Object); `rowIndex` the current numerical index.
 
 If you have a row definition like this:
 ```javascript
-let rowDefinition = [
+let rollingRowCssClasses = [
     {className: {propertyPath: 'location.postcode'}},
     {className: {propertyPath: 'username', value: (data, row, rowIndex) => data.last_name}},
     {className: {value: (data, row, rowIndex) => (rowIndex + 1) % 2 === 0 ? 'success' : ''}},
@@ -50,7 +50,7 @@ Every even third row (so every six rows) will have a `success` class (beware of 
 
 You need to pass this row definition to your ExtendedTable instance:
 ```html
-<ExtendedTable columns={columnDefinition} data={rows} rows={rowDefinition}></ExtendedTable>
+<ExtendedTable columns={columnDefinition} data={rows} rollingRowCssClasses={rollingRowCssClasses}></ExtendedTable>
 ```
 
 #### Column (Cell) CSS Classes

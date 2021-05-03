@@ -27,7 +27,7 @@
         },
     ];
 
-    let rowDefinition = [
+    let rollingRowCssClasses = [
         {className: {propertyPath: 'location.postcode'}},
         {className: {propertyPath: 'username', value: (data, row, rowIndex) => data.last_name}},
         {className: {value: (data, row, rowIndex) => (rowIndex + 1) % 2 === 0 ? 'success' : ''}},
@@ -52,7 +52,7 @@ Theme
         --theme-headline-background-color: {theme === 'light' ? '#ffffff' : '#34495e'};
         --theme-text-color: {theme === 'light' ? '#34495e' : '#ecf0f1'};
 ">
-    <ExtendedTable columns={columnDefinition} data={rows} rows={rowDefinition}></ExtendedTable>
+    <ExtendedTable columns={columnDefinition} data={rows} rollingRowCssClasses={rollingRowCssClasses}></ExtendedTable>
 </div>
 
 <style>
