@@ -46,13 +46,15 @@ Theme
     <input type="radio" value="dark" bind:group={theme} /> Dark
 </label>
 
-<!-- extra div for scoping -->
-<div style="
-        --theme-background-color: {theme === 'light' ? '#ffffff' : '#7f8c8d'};
-        --theme-headline-background-color: {theme === 'light' ? '#ffffff' : '#34495e'};
-        --theme-text-color: {theme === 'light' ? '#34495e' : '#ecf0f1'};
-">
-    <ExtendedTable columns={columnDefinition} data={rows} rollingRowCssClasses={rollingRowCssClasses}></ExtendedTable>
+<!-- extra divs for scoping to win the specificity wars :( -->
+<div>
+    <div style="
+            --theme-background-color: {theme === 'light' ? '#ffffff' : '#7f8c8d'};
+            --theme-headline-background-color: {theme === 'light' ? '#ffffff' : '#34495e'};
+            --theme-text-color: {theme === 'light' ? '#34495e' : '#ecf0f1'};
+    ">
+        <ExtendedTable columns={columnDefinition} data={rows} rowCssClasses={rowCssClasses}></ExtendedTable>
+    </div>
 </div>
 
 <style>
@@ -64,8 +66,8 @@ Theme
         background-color: var(--theme-headline-background-color);
     }
 
-    div :global(tbody .row-even) {
-        background: red;
+    div div :global(tbody .row-even) {
+        background-color: red;
     }
 
     div :global(.col-last_name) {
