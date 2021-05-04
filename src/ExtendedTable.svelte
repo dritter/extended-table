@@ -125,7 +125,7 @@
             );
             column.className.propertyPath && classes.push(sluggify(deepValue(data, column.className.propertyPath)));
         }
-        classes.push(getOddEvenClass(columnIndex, 'col'));
+        classes.push(getOddEvenClass(columnIndex + 1, 'col'));
 
         return classes.join(' ');
     };
@@ -140,7 +140,7 @@
                 row.className.propertyPath && classes.push(sluggify(deepValue(data, row.className.propertyPath)));
             }
         });
-        classes.push(getOddEvenClass(index, 'row'));
+        classes.push(getOddEvenClass(index + 1, 'row'));
 
         return classes.join(' ');
     };
