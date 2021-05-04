@@ -27,10 +27,10 @@
         },
     ];
 
-    let rollingRowCssClasses = [
+    let rowCssClasses = [
         {className: {propertyPath: 'location.postcode'}},
-        {className: {propertyPath: 'username', value: (data, row, rowIndex) => data.last_name}},
-        {className: {value: (data, row, rowIndex) => (rowIndex + 1) % 2 === 0 ? 'success' : ''}},
+        {className: {value: (data, row, rowIndex) => (rowIndex + 1) % 2 === 0 ? data.last_name : false}},
+        {className: {value: (data, row, rowIndex) => data.title === "mr" ? "male" : ""}},
     ];
 
     let rows = data.slice(0, 10);
@@ -78,12 +78,7 @@ Theme
         transform: rotate(-45deg);
     }
 
-    div :global(.success.goldenkoala410) {
+    div :global(tbody tr.male) {
         background-color: #2793da;
-    }
-
-    div :global(tr.success),
-    div :global(td.beautifulkoala361) {
-        background-color: #006600;
     }
 </style>
