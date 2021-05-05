@@ -121,7 +121,7 @@
 
         if (typeof column.className === 'object') {
             typeof column.className.value === 'function' && classes.push(
-                sluggify(column.className.value(data, column, columnIndex, rowIndex))
+                column.className.value(data, column, columnIndex, rowIndex)
             );
             column.className.propertyPath && classes.push(sluggify(deepValue(data, column.className.propertyPath)));
         }
@@ -136,7 +136,7 @@
         rows.forEach((row) => {
             typeof row.className === 'string' && classes.push(row.className);
             if (typeof row.className === 'object') {
-                typeof row.className.value === 'function' && classes.push(sluggify(row.className.value(data, row, index)));
+                typeof row.className.value === 'function' && classes.push(row.className.value(data, row, index));
                 row.className.propertyPath && classes.push(sluggify(deepValue(data, row.className.propertyPath)));
             }
         });
@@ -153,7 +153,7 @@
 
         if (typeof column.headerClassName === 'object') {
             typeof column.headerClassName.value === 'function' && classes.push(
-                sluggify(column.headerClassName.value(column, index))
+                column.headerClassName.value(column, index)
             );
         }
 
