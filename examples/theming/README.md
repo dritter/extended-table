@@ -34,7 +34,7 @@ Written on the `column` prop Object as `headerClassName`, which may be a static 
 
 Since Version `1.1.0` there is a new prop `rowCssClasses` that takes the row definition (Array of Objects). This is used to write the desired CSS Classes only and differs from the column definition in the way that all definitions are applied for each row as long as they return a truthy value.
 As before, the `className` may be a static String, or an Object. Other than for Headlines, the `className` may have a `propertyPath` that is resolved on the data.
-The arguments for the `value` callback are as follows: `data` the current data Object; `row` the current row definition (Object); `rowIndex` the current numerical index.
+The arguments for the `value` callback are as follows: `data` the current data Object; `row` the current row definition (Object); `rowIndex` the current numerical index. The return value should be `string`.
 
 If you have a row definition like this:
 ```javascript
@@ -54,7 +54,7 @@ You need to pass this row definition to your ExtendedTable instance:
 
 #### Column (Cell) CSS Classes
 
-Your column definition Object can now have a `className` property that may either be a String or an Object. The Object may have a `propertyPath` and/or a `value` callback. The callback gets passed in `data` (Object), `columnDefinition` (Object), `columnIndex` (Number) and `rowIndex` (Number).
+Your column definition Object can now have a `className` property that may either be a String or an Object. The Object may have a `propertyPath` and/or a `value` callback. The callback gets passed in `data` (Object), `columnDefinition` (Object), `columnIndex` (Number) and `rowIndex` (Number). The return value should be `string`.
 
 ## Sluggifying
 
