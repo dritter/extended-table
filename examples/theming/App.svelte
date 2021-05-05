@@ -29,7 +29,7 @@
 
     let rowCssClasses = [
         {className: {propertyPath: 'location.postcode'}},
-        {className: {value: (data, row, rowIndex) => (rowIndex + 1) % 2 === 0 ? data.last_name : false}},
+        {className: {value: (data, row, rowIndex) => (rowIndex + 1) % 2 === 0 ? data.last_name : ""}},
         {className: {value: (data, row, rowIndex) => data.title === "mr" ? "male" : ""}},
     ];
 
