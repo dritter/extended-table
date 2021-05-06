@@ -28,13 +28,31 @@ The handling is a bit different for every Row, Column and Headline as explained 
 
 #### Headline CSS Classes
 
-Written on the `column` prop Object as `headerClassName`, which may be a static String, or a Object that has a `headerClassName.value = (column, columnIndex)` callback. The `column` parameter is your definition of the column. `columnIndex` is the numeric index of the column.
+Written on the `column` prop Object as `headerClassName`, which may be a static String, or a Object that has a `headerClassName.value = (column, columnIndex)` callback.
+
+The arguments for the `value` callback are as follows:
+
+| Parameter     | Type   | Description                                                |
+|---------------|--------|------------------------------------------------------------|
+| `column`      | Object | column definition object of the column as specified by you |
+| `columnIndex` | Number | numerical index of the column                              |
+|---------------|--------|------------------------------------------------------------|
+| return        | String | the css class names you want to write                      |
 
 #### Row CSS Classes
 
 Since Version `1.1.0` there is a new prop `rowCssClasses` that takes the row definition (Array of Objects). This is used to write the desired CSS Classes only and differs from the column definition in the way that all definitions are applied for each row as long as they return a truthy value.
 As before, the `className` may be a static String, or an Object. Other than for Headlines, the `className` may have a `propertyPath` that is resolved on the data.
-The arguments for the `value` callback are as follows: `data` the current data Object; `row` the current row definition (Object); `rowIndex` the current numerical index. The return value should be `string`.
+
+The arguments for the `value` callback are as follows:
+
+| Parameter     | Type   | Description                                                |
+|---------------|--------|------------------------------------------------------------|
+| `data`        | Object | data item of the current iteration                         |
+| `row`         | Object | the currently matching row definition object of the row    |
+| `rowIndex`    | Number | numerical index of the row                                 |
+|---------------|--------|------------------------------------------------------------|
+| return        | String | the css class names you want to write                      |
 
 If you have a row definition like this:
 ```javascript
@@ -54,7 +72,18 @@ You need to pass this row definition to your ExtendedTable instance:
 
 #### Column (Cell) CSS Classes
 
-Your column definition Object can now have a `className` property that may either be a String or an Object. The Object may have a `propertyPath` and/or a `value` callback. The callback gets passed in `data` (Object), `columnDefinition` (Object), `columnIndex` (Number) and `rowIndex` (Number). The return value should be `string`.
+Your column definition Object can now have a `className` property that may either be a String or an Object. The Object may have a `propertyPath` and/or a `value` callback.
+
+The arguments for the `value` callback are as follows:
+
+| Parameter     | Type   | Description                                                |
+|---------------|--------|------------------------------------------------------------|
+| `data`        | Object | data item of the current iteration                         |
+| `column`      | Object | column definition object of the column as specified by you |
+| `columnIndex` | Number | numerical index of the column                              |
+| `rowIndex`    | Number | numerical index of the row                                 |
+|---------------|--------|------------------------------------------------------------|
+| return        | String | the css class names you want to write                      |
 
 ## Sluggifying
 
