@@ -41,7 +41,7 @@ If you have a row definition like this:
 let rowCssClasses = [
   {className: {propertyPath: 'location.postcode'}},
   {className: {value: (data, row, rowIndex) => (rowIndex + 1) % 2 === 0 ? data.last_name : "" }},
-  {className: {value: (data, row, rowIndex) => data.title === "mr" ? "male" : ""}},
+  {className: {value: (data, row, rowIndex) => data.title === "mr" ? "male my-other-class" : ""}},
 ];
 ```
 This means that each row will have a CSS Class that contains the postcode (resolved as propertyPath from the `location` object; this depends on your given data structure) and if the title is "mr", a "male" class will be added. 
