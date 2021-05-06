@@ -1,6 +1,6 @@
 <script>
     import ExtendedTable from "../../src/ExtendedTable.svelte";
-    import {default as data} from '../../fixtures/fixtures.json';
+    import {default as rawData} from '../../fixtures/fixtures.json';
 
     let columnDefinition = [
         {
@@ -33,7 +33,7 @@
         {className: {value: (data, row, rowIndex) => data.title === "mr" ? "male my-other-class" : ""}},
     ];
 
-    let rows = data.slice(0, 10);
+    let data = rawData.slice(0, 10);
 
     let theme = "light";
 </script>
@@ -53,7 +53,7 @@ Theme
             --theme-headline-background-color: {theme === 'light' ? '#ffffff' : '#34495e'};
             --theme-text-color: {theme === 'light' ? '#34495e' : '#ecf0f1'};
     ">
-        <ExtendedTable columns={columnDefinition} data={rows} rowCssClasses={rowCssClasses}></ExtendedTable>
+        <ExtendedTable columns={columnDefinition} data={data} rowCssClasses={rowCssClasses}></ExtendedTable>
     </div>
 </div>
 
