@@ -70,6 +70,10 @@ Theme
         background-color: red;
     }
 
+    div div :global(tbody .goldenkoala410.success) {
+        background-color: green;
+    }
+
     div :global(.col-last_name) {
         background-color: goldenrod;
     }
