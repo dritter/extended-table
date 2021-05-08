@@ -54,18 +54,20 @@ The arguments for the `value` callback are as follows:
 
 If you have a row definition like this:
 ```javascript
-let rowCssClasses = [
-  {className: {propertyPath: 'location.postcode'}},
-  {className: {value: (data, rowIndex) => (rowIndex + 1) % 2 === 0 ? data.last_name : "" }},
-  {className: {value: (data, rowIndex) => data.title === "mr" ? "male my-other-class" : ""}},
-];
+let rowDefinition = {
+    classNames: [
+     'my-row-class',
+      {propertyPath: 'location.postcode'},
+      {value: (data, rowIndex) => (rowIndex + 1) % 2 === 0 ? data.last_name : "" },
+      {value: (data, rowIndex) => data.title === "mr" ? "male my-other-class" : ""},
+]};
 ```
 This means that each row will have a CSS Class that contains the postcode (resolved as propertyPath from the `location` object; this depends on your given data structure) and if the title is "mr", a "male" class will be added. 
 On every second row there will be a CSS Classes with the `last_name` (via callback) added.
 
 You need to pass this row definition to your ExtendedTable instance:
 ```html
-<ExtendedTable columns={columnDefinition} data={rows} rowCssClasses={rowCssClasses}></ExtendedTable>
+<ExtendedTable columns={columnDefinition} data={data} rows={rowDefinition}></ExtendedTable>
 ```
 
 #### Column (Cell) CSS Classes

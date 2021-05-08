@@ -6,7 +6,9 @@
 
     export let data = [];
     export let columns = [];
-    export let rowCssClasses = [];
+    export let rows = {
+        classNames: [],
+    };
     const defaultRowClickHandler = (row) => true;
     export let onRowClick = defaultRowClickHandler;
 
@@ -134,10 +136,10 @@
         const classes = [];
 
         rows.forEach((row) => {
-            typeof row.className === 'string' && classes.push(row.className);
-            if (typeof row.className === 'object') {
-                typeof row.className.value === 'function' && classes.push(row.className.value(data, index));
-                row.className.propertyPath && classes.push(sluggify(deepValue(data, row.className.propertyPath)));
+            typeof row === 'string' && classes.push(row);
+            if (typeof row === 'object') {
+                typeof row.value === 'function' && classes.push(row.value(data, index));
+                row.propertyPath && classes.push(sluggify(deepValue(data, row.propertyPath)));
             }
         });
         classes.push(getOddEvenClass(index + 1, 'row'));
@@ -233,7 +235,7 @@
     </thead>
     <tbody>
         {#each data as d, rowIndex}
-            <tr on:click={() => onRowClick(d)} class="{getRowClasses(rowIndex, rowCssClasses, d)}" class:mouse-pointer={onRowClick !== defaultRowClickHandler}>
+            <tr on:click={() => onRowClick(d)} class="{getRowClasses(rowIndex, rows.classNames, d)}" class:mouse-pointer={onRowClick !== defaultRowClickHandler}>
                 {#each columns as column, columnIndex}
                     {#if column.clickHandler}
                         <td on:click|stopPropagation={() => column.clickHandler(d)}  class="{getCellClasses(columnIndex, rowIndex, column, d)}"  class:hidden={column.hidden}>

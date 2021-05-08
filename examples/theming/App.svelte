@@ -27,11 +27,14 @@
         },
     ];
 
-    let rowCssClasses = [
-        {className: {propertyPath: 'location.postcode'}},
-        {className: {value: (data, rowIndex) => (rowIndex + 1) % 2 === 0 ? data.last_name : ""}},
-        {className: {value: (data, rowIndex) => data.title === "mr" ? "male my-other-class" : ""}},
-    ];
+    let rowDefinition = {
+        classNames: [
+            'my-row-class',
+            {propertyPath: 'location.postcode'},
+            {value: (data, rowIndex) => (rowIndex + 1) % 2 === 0 ? data.last_name : ""},
+            {value: (data, rowIndex) => data.title === "mr" ? "male my-other-class" : ""},
+        ],
+    };
 
     let data = rawData.slice(0, 10);
 
@@ -53,7 +56,7 @@ Theme
             --theme-headline-background-color: {theme === 'light' ? '#ffffff' : '#34495e'};
             --theme-text-color: {theme === 'light' ? '#34495e' : '#ecf0f1'};
     ">
-        <ExtendedTable columns={columnDefinition} data={data} rowCssClasses={rowCssClasses}></ExtendedTable>
+        <ExtendedTable columns={columnDefinition} data={data} rows={rowDefinition}></ExtendedTable>
     </div>
 </div>
 
