@@ -14,7 +14,7 @@
             propertyPath: 'last_name',
             className: {
                 propertyPath: 'username',
-                value: (rowData, column, columnIndex, rowIndex) => rowData.username === 'goldenkoala410' ? 'success' : '',
+                value: (rowData, columnIndex, rowIndex) => rowData.username === 'goldenkoala410' ? 'success' : '',
             }
         },
         {
@@ -22,15 +22,15 @@
             propertyPath: 'location.postcode',
             value: (rowData) => `${rowData.location.postcode} ${rowData.location.state} ${rowData.location.city}`,
             headerClassName: {
-                value: (columnDefinition) => columnDefinition.propertyPath + '-TEST',
+                value: (columnIndex) => (columnDefinition[columnIndex].propertyPath).replace('.', '_') + '-TEST',
             }
         },
     ];
 
     let rowCssClasses = [
         {className: {propertyPath: 'location.postcode'}},
-        {className: {value: (data, row, rowIndex) => (rowIndex + 1) % 2 === 0 ? data.last_name : ""}},
-        {className: {value: (data, row, rowIndex) => data.title === "mr" ? "male my-other-class" : ""}},
+        {className: {value: (data, rowIndex) => (rowIndex + 1) % 2 === 0 ? data.last_name : ""}},
+        {className: {value: (data, rowIndex) => data.title === "mr" ? "male my-other-class" : ""}},
     ];
 
     let data = rawData.slice(0, 10);

@@ -28,13 +28,12 @@ The handling is a bit different for every Row, Column and Headline as explained 
 
 #### Headline CSS Classes
 
-Written on the `column` prop Object as `headerClassName`, which may be a static String, or a Object that has a `headerClassName.value = (column, columnIndex)` callback.
+Written on the `column` prop Object as `headerClassName`, which may be a static String, or a Object that has a `headerClassName.value = (columnIndex)` callback.
 
 The arguments for the `value` callback are as follows:
 
 | Parameter     | Type   | Description                                                |
 |---------------|--------|------------------------------------------------------------|
-| `column`      | Object | column definition object of the column as specified by you |
 | `columnIndex` | Number | numerical index of the column                              |
 |---------------|--------|------------------------------------------------------------|
 | return        | String | the css class names you want to write                      |
@@ -49,7 +48,6 @@ The arguments for the `value` callback are as follows:
 | Parameter     | Type   | Description                                                |
 |---------------|--------|------------------------------------------------------------|
 | `data`        | Object | data item of the current iteration                         |
-| `row`         | Object | the currently matching row definition object of the row    |
 | `rowIndex`    | Number | numerical index of the row                                 |
 |---------------|--------|------------------------------------------------------------|
 | return        | String | the css class names you want to write                      |
@@ -58,8 +56,8 @@ If you have a row definition like this:
 ```javascript
 let rowCssClasses = [
   {className: {propertyPath: 'location.postcode'}},
-  {className: {value: (data, row, rowIndex) => (rowIndex + 1) % 2 === 0 ? data.last_name : "" }},
-  {className: {value: (data, row, rowIndex) => data.title === "mr" ? "male my-other-class" : ""}},
+  {className: {value: (data, rowIndex) => (rowIndex + 1) % 2 === 0 ? data.last_name : "" }},
+  {className: {value: (data, rowIndex) => data.title === "mr" ? "male my-other-class" : ""}},
 ];
 ```
 This means that each row will have a CSS Class that contains the postcode (resolved as propertyPath from the `location` object; this depends on your given data structure) and if the title is "mr", a "male" class will be added. 
@@ -79,7 +77,6 @@ The arguments for the `value` callback are as follows:
 | Parameter     | Type   | Description                                                |
 |---------------|--------|------------------------------------------------------------|
 | `data`        | Object | data item of the current iteration                         |
-| `column`      | Object | column definition object of the column as specified by you |
 | `columnIndex` | Number | numerical index of the column                              |
 | `rowIndex`    | Number | numerical index of the row                                 |
 |---------------|--------|------------------------------------------------------------|
