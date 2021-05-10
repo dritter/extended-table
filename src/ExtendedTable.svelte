@@ -4,7 +4,6 @@
     import stickybits from 'stickybits/dist/stickybits.es';
     import { sortByDefinition } from './sortBy';
     import { getHeadlineClasses, getRowClasses, getCellClasses } from './cssClassNames';
-    import { optionalClickHandler } from "./optionalClickHandler";
 
     export let data = [];
     export let columns = [];
@@ -102,6 +101,8 @@
         clearCaches();
     };
 
+    const onCellClick = (column, data, columnIndex) => column.clickHandler?.(data, columnIndex)
+
     let slots = new Set($$props.$$slots ? Object.getOwnPropertyNames($$props.$$slots) : []);
 </script>
 
@@ -177,7 +178,7 @@
         {#each data as d, rowIndex}
             <tr on:click={() => onRowClick(d)} class="{getRowClasses(rowIndex, rows.classNames, d)}" class:mouse-pointer={onRowClick !== defaultRowClickHandler}>
                 {#each columns as column, columnIndex}
-                    <td use:optionalClickHandler={{column, data: d}} class="{getCellClasses(columnIndex, rowIndex, column, d)}" class:hidden={column.hidden}>
+                    <td on:click={() => onCellClick(column, d, columnIndex)} class="{getCellClasses(columnIndex, rowIndex, column, d)}" class:hidden={column.hidden}>
                         {#if column.collapsed}
                             <div class="mouse-pointer" on:click|stopPropagation={expandColumn(column)}>
                                 {@html collapsedPlaceholder}
