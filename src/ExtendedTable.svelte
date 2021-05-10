@@ -4,6 +4,7 @@
     import stickybits from 'stickybits/dist/stickybits.es';
     import { sortByDefinition } from './sortBy';
     import { getHeadlineClasses, getRowClasses, getCellClasses } from './cssClassNames';
+    import { optionalClickHandler } from "./optionalClickHandler";
 
     export let data = [];
     export let columns = [];
@@ -176,119 +177,61 @@
         {#each data as d, rowIndex}
             <tr on:click={() => onRowClick(d)} class="{getRowClasses(rowIndex, rows.classNames, d)}" class:mouse-pointer={onRowClick !== defaultRowClickHandler}>
                 {#each columns as column, columnIndex}
-                    {#if column.clickHandler}
-                        <td on:click|stopPropagation={() => column.clickHandler(d)} class="{getCellClasses(columnIndex, rowIndex, column, d)}" class:hidden={column.hidden}>
-                            {#if column.collapsed}
-                                <div class="mouse-pointer" on:click|stopPropagation={expandColumn(column)}>
-                                    {@html collapsedPlaceholder}
-                                </div>
-                            {:else}
-                                {#if data && slots.has('column-' + (columnIndex + 1))}
-                                    {#if columnIndex === 0}
-                                        <slot name="column-1" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 1}
-                                        <slot name="column-2" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 2}
-                                        <slot name="column-3" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 3}
-                                        <slot name="column-4" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 4}
-                                        <slot name="column-5" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 5}
-                                        <slot name="column-6" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 6}
-                                        <slot name="column-7" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 7}
-                                        <slot name="column-8" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 8}
-                                        <slot name="column-9" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 9}
-                                        <slot name="column-10" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 10}
-                                        <slot name="column-11" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 11}
-                                        <slot name="column-12" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 12}
-                                        <slot name="column-13" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 13}
-                                        <slot name="column-14" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 14}
-                                        <slot name="column-15" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 15}
-                                        <slot name="column-16" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 16}
-                                        <slot name="column-17" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 17}
-                                        <slot name="column-18" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 18}
-                                        <slot name="column-19" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 19}
-                                        <slot name="column-20" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {/if}
-                                {:else if column.hasOwnProperty('value')}
-                                    {column.value(d, rowIndex, columnIndex)}
-                                {:else if column.propertyPath}
-                                    {deepValue(d, column.propertyPath)}
+                    <td use:optionalClickHandler={{column, data: d}} class="{getCellClasses(columnIndex, rowIndex, column, d)}" class:hidden={column.hidden}>
+                        {#if column.collapsed}
+                            <div class="mouse-pointer" on:click|stopPropagation={expandColumn(column)}>
+                                {@html collapsedPlaceholder}
+                            </div>
+                        {:else}
+                            {#if data && slots.has('column-' + (columnIndex + 1))}
+                                {#if columnIndex === 0}
+                                    <slot name="column-1" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
+                                {:else if columnIndex === 1}
+                                    <slot name="column-2" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
+                                {:else if columnIndex === 2}
+                                    <slot name="column-3" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
+                                {:else if columnIndex === 3}
+                                    <slot name="column-4" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
+                                {:else if columnIndex === 4}
+                                    <slot name="column-5" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
+                                {:else if columnIndex === 5}
+                                    <slot name="column-6" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
+                                {:else if columnIndex === 6}
+                                    <slot name="column-7" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
+                                {:else if columnIndex === 7}
+                                    <slot name="column-8" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
+                                {:else if columnIndex === 8}
+                                    <slot name="column-9" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
+                                {:else if columnIndex === 9}
+                                    <slot name="column-10" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
+                                {:else if columnIndex === 10}
+                                    <slot name="column-11" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
+                                {:else if columnIndex === 11}
+                                    <slot name="column-12" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
+                                {:else if columnIndex === 12}
+                                    <slot name="column-13" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
+                                {:else if columnIndex === 13}
+                                    <slot name="column-14" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
+                                {:else if columnIndex === 14}
+                                    <slot name="column-15" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
+                                {:else if columnIndex === 15}
+                                    <slot name="column-16" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
+                                {:else if columnIndex === 16}
+                                    <slot name="column-17" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
+                                {:else if columnIndex === 17}
+                                    <slot name="column-18" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
+                                {:else if columnIndex === 18}
+                                    <slot name="column-19" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
+                                {:else if columnIndex === 19}
+                                    <slot name="column-20" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
                                 {/if}
+                            {:else if column.hasOwnProperty('value')}
+                                {column.value(d, rowIndex, columnIndex)}
+                            {:else if column.propertyPath}
+                                {deepValue(d, column.propertyPath)}
                             {/if}
-                        </td>
-                    {:else}
-                        <td class="{getCellClasses(columnIndex, rowIndex, column, d)}" class:hidden={column.hidden}>
-                            {#if column.collapsed}
-                                <div class="mouse-pointer" on:click|stopPropagation={expandColumn(column)}>
-                                    {@html collapsedPlaceholder}
-                                </div>
-                            {:else}
-                                {#if data && slots.has('column-' + (columnIndex + 1))}
-                                    {#if columnIndex === 0}
-                                        <slot name="column-1" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 1}
-                                        <slot name="column-2" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 2}
-                                        <slot name="column-3" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 3}
-                                        <slot name="column-4" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 4}
-                                        <slot name="column-5" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 5}
-                                        <slot name="column-6" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 6}
-                                        <slot name="column-7" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 7}
-                                        <slot name="column-8" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 8}
-                                        <slot name="column-9" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 9}
-                                        <slot name="column-10" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 10}
-                                        <slot name="column-11" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 11}
-                                        <slot name="column-12" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 12}
-                                        <slot name="column-13" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 13}
-                                        <slot name="column-14" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 14}
-                                        <slot name="column-15" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 15}
-                                        <slot name="column-16" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 16}
-                                        <slot name="column-17" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 17}
-                                        <slot name="column-18" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 18}
-                                        <slot name="column-19" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {:else if columnIndex === 19}
-                                        <slot name="column-20" data={d} rowIndex={rowIndex} columnIndex={columnIndex}></slot>
-                                    {/if}
-                                {:else if column.hasOwnProperty('value')}
-                                    {column.value(d, rowIndex, columnIndex)}
-                                {:else if column.propertyPath}
-                                    {deepValue(d, column.propertyPath)}
-                                {/if}
-                            {/if}
-                        </td>
-                    {/if}
+                        {/if}
+                    </td>
                 {/each}
             </tr>
             <slot name="additionalRow" rowData={d}></slot>
