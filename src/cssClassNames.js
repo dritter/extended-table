@@ -32,18 +32,18 @@ export const getCellClasses = (columnIndex, rowIndex, column, data) => {
     return classes.join(' ');
 };
 
-export const getRowClasses = (index, rows, data) => {
+export const getRowClasses = (index, classNames, data) => {
     const classes = [];
 
-    rows.forEach((row) => {
-        if (typeof row === 'string') {
-            classes.push(row);
+    classNames.forEach((className) => {
+        if (typeof className === 'string') {
+            classes.push(className);
         }
-        if (typeof row.value === 'function') {
-            classes.push(row.value(data, index));
+        if (typeof className.value === 'function') {
+            classes.push(className.value(data, index));
         }
-        if (row.propertyPath) {
-            classes.push(sluggify(deepValue(data, row.propertyPath)));
+        if (className.propertyPath) {
+            classes.push(sluggify(deepValue(data, className.propertyPath)));
         }
     });
     classes.push(getOddEvenClass(index + 1, 'row'));
