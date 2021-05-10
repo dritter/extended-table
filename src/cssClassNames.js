@@ -52,7 +52,7 @@ export const getRowClasses = (index, rows, data) => {
 };
 
 export const getHeadlineClasses = (index, column) => {
-    let classes = [];
+    const classes = [];
 
     if (column.sortable) {
         classes.push('mouse-pointer');
