@@ -101,7 +101,12 @@
         clearCaches();
     };
 
-    const onCellClick = (column, data, columnIndex) => column.clickHandler?.(data, columnIndex)
+    const onCellClick = (event, column, data, columnIndex) => {
+        if (typeof column.clickHandler === 'function') {
+            event.stopPropagation();
+            column.clickHandler(data, columnIndex);
+        }
+    }
 
     let slots = new Set($$props.$$slots ? Object.getOwnPropertyNames($$props.$$slots) : []);
 </script>
@@ -178,7 +183,7 @@
         {#each data as d, rowIndex}
             <tr on:click={() => onRowClick(d)} class="{getRowClasses(rowIndex, rows.classNames, d)}" class:mouse-pointer={onRowClick !== defaultRowClickHandler}>
                 {#each columns as column, columnIndex}
-                    <td on:click={() => onCellClick(column, d, columnIndex)} class="{getCellClasses(columnIndex, rowIndex, column, d)}" class:hidden={column.hidden}>
+                    <td on:click={(event) => onCellClick(event, column, d, columnIndex)} class="{getCellClasses(columnIndex, rowIndex, column, d)}" class:hidden={column.hidden}>
                         {#if column.collapsed}
                             <div class="mouse-pointer" on:click|stopPropagation={expandColumn(column)}>
                                 {@html collapsedPlaceholder}
