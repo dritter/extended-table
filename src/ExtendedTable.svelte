@@ -177,7 +177,7 @@
             <tr on:click={() => onRowClick(d)} class="{getRowClasses(rowIndex, rows.classNames, d)}" class:mouse-pointer={onRowClick !== defaultRowClickHandler}>
                 {#each columns as column, columnIndex}
                     {#if column.clickHandler}
-                        <td on:click|stopPropagation={() => column.clickHandler(d)}  class="{getCellClasses(columnIndex, rowIndex, column, d)}"  class:hidden={column.hidden}>
+                        <td on:click|stopPropagation={() => column.clickHandler(d)} class="{getCellClasses(columnIndex, rowIndex, column, d)}"  class:hidden={column.hidden}>
                             {#if column.collapsed}
                                 <div class="mouse-pointer" on:click|stopPropagation={expandColumn(column)}>
                                     {@html collapsedPlaceholder}
