@@ -149,11 +149,11 @@
         </tr>
     </ExtendedTable>
 </div>
-<Pagination totalPages={pages} activePage={activePage} on:change={(event) => rows = getPage(event.detail.page, filteredAndSortedRows)} />
+<Pagination totalPages={pages} activePage={activePage} on:blur={(event) => rows = getPage(event.detail.page, filteredAndSortedRows)} />
 
 <div>
     Show
-    <select bind:value={itemsPerPage} on:change={switchShownItemsPerPage}>
+    <select bind:value={itemsPerPage} on:blur={switchShownItemsPerPage}>
         {#each [5, 10, 20] as itemsPerPage}
             <option value={itemsPerPage}>
                 {itemsPerPage}
