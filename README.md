@@ -71,6 +71,11 @@ named `column-X`, `X` being the number:
 Of course, all three ways can be combined per Table. On a column level you have to
 decide on one way.
 
+### Flexible CSS Classes
+
+Have a look at the [theming example](examples/theming/README.md) where this is
+explained.
+
 ### ClickHandlers
 
 To specify what happens when you click on a Row, you could set the `onRowClick`

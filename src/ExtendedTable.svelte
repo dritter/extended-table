@@ -3,9 +3,13 @@
     import { deepValue } from '@jsier/deep-value';
     import stickybits from 'stickybits/dist/stickybits.es';
     import { sortByDefinition } from './sortBy';
+    import { getHeadlineClasses, getRowClasses, getCellClasses } from './cssClassNames';
 
     export let data = [];
     export let columns = [];
+    export let rows = {
+        classNames: [],
+    };
     const defaultRowClickHandler = (row) => true;
     export let onRowClick = defaultRowClickHandler;
 
@@ -97,41 +101,6 @@
         clearCaches();
     };
 
-    const getClasses = (classes, index, prefix) => {
-        if (index % 2 === 0) {
-            classes.push('even');
-        } else {
-            classes.push('odd');
-        }
-
-        return classes.map((c) => prefix + '-' + c)
-            .join(" ");
-    };
-
-    const slugEx = new RegExp(/[^a-z0-9]/g);
-    const sluggify = (input) => {
-        return input.replace(slugEx, '_');
-    };
-
-    const getColumnClasses = (index, propertyPath) => {
-        let classes = [];
-        propertyPath && classes.push(sluggify(propertyPath));
-
-        return getClasses(classes, index, 'col');
-    };
-
-    const getRowClasses = (index) => {
-        return getClasses([], index, 'row');
-    };
-
-    const getHeadlineClasses = (column) => {
-        let classes = [];
-        column.sortable && classes.push('mouse-pointer');
-        column.propertyPath && classes.push('col-head-' + sluggify(column.propertyPath));
-
-        return classes.join(" ");
-    };
-
     let slots = new Set($$props.$$slots ? Object.getOwnPropertyNames($$props.$$slots) : []);
 </script>
 
@@ -184,8 +153,8 @@
 <table bind:this={table} class="et">
     <thead>
         <tr>
-            {#each columns as column}
-                <th on:click={() => sortingFunction(column, columns, data, multisort, clearCaches)} class="{getHeadlineClasses(column)}" class:hidden={column.hidden}>
+            {#each columns as column, columnHeaderIndex}
+                <th on:click={() => sortingFunction(column, columns, data, multisort, clearCaches)} class="{getHeadlineClasses(columnHeaderIndex, column)}" class:hidden={column.hidden}>
                     {#if column.collapsed}
                         <div on:click|stopPropagation={expandColumn(column)}>
                             {@html collapsedPlaceholder}
@@ -205,10 +174,10 @@
     </thead>
     <tbody>
         {#each data as d, rowIndex}
-            <tr on:click={() => onRowClick(d)} class="{getRowClasses(rowIndex)}" class:mouse-pointer={onRowClick !== defaultRowClickHandler}>
+            <tr on:click={() => onRowClick(d)} class="{getRowClasses(rowIndex, rows.classNames, d)}" class:mouse-pointer={onRowClick !== defaultRowClickHandler}>
                 {#each columns as column, columnIndex}
                     {#if column.clickHandler}
-                        <td on:click|stopPropagation={() => column.clickHandler(d)}  class="{getColumnClasses(columnIndex, column.propertyPath)}"  class:hidden={column.hidden}>
+                        <td on:click|stopPropagation={() => column.clickHandler(d)} class="{getCellClasses(columnIndex, rowIndex, column, d)}" class:hidden={column.hidden}>
                             {#if column.collapsed}
                                 <div class="mouse-pointer" on:click|stopPropagation={expandColumn(column)}>
                                     {@html collapsedPlaceholder}
@@ -264,7 +233,7 @@
                             {/if}
                         </td>
                     {:else}
-                        <td class="{getColumnClasses(columnIndex, column.propertyPath)}" class:hidden={column.hidden}>
+                        <td class="{getCellClasses(columnIndex, rowIndex, column, d)}" class:hidden={column.hidden}>
                             {#if column.collapsed}
                                 <div class="mouse-pointer" on:click|stopPropagation={expandColumn(column)}>
                                     {@html collapsedPlaceholder}
