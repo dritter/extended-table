@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1619565651751,
+  "lastUpdate": 1620715345639,
   "repoUrl": "https://github.com/dritter/extended-table",
   "entries": {
     "Benchmark.js Benchmark": [
@@ -534,6 +534,96 @@ window.BENCHMARK_DATA = {
             "name": "sorting",
             "value": 15.09,
             "range": "±2.76%",
+            "unit": "ops/sec",
+            "extra": "34 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dritter03@googlemail.com",
+            "name": "Dominik Ritter",
+            "username": "dritter"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3b4009ae2119c6100a91117fb00f1ddf588478b8",
+          "message": "Merge pull request #8 from dritter/improve_setting_css_classes\n\nMake CSS Classes more flexible",
+          "timestamp": "2021-05-11T08:24:57+02:00",
+          "tree_id": "43f60de62ce14d1a0597e962a4029d9f7cddebe8",
+          "url": "https://github.com/dritter/extended-table/commit/3b4009ae2119c6100a91117fb00f1ddf588478b8"
+        },
+        "date": 1620714362254,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "default rendering",
+            "value": 116,
+            "range": "±8.58%",
+            "unit": "ops/sec",
+            "extra": "61 samples"
+          },
+          {
+            "name": "slot rendering",
+            "value": 113,
+            "range": "±8.03%",
+            "unit": "ops/sec",
+            "extra": "52 samples"
+          },
+          {
+            "name": "sorting",
+            "value": 17.38,
+            "range": "±2.80%",
+            "unit": "ops/sec",
+            "extra": "39 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dritter03@googlemail.com",
+            "name": "Dominik Ritter",
+            "username": "dritter"
+          },
+          "committer": {
+            "email": "dritter03@googlemail.com",
+            "name": "Dominik Ritter",
+            "username": "dritter"
+          },
+          "distinct": true,
+          "id": "e74f699be15663567b6d5a1826a0b5f8c86d4d43",
+          "message": "Bump NPM version",
+          "timestamp": "2021-05-11T08:41:19+02:00",
+          "tree_id": "9766e813cbc9a8e0bc9c702f2435ef9f5f99d62c",
+          "url": "https://github.com/dritter/extended-table/commit/e74f699be15663567b6d5a1826a0b5f8c86d4d43"
+        },
+        "date": 1620715345620,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "default rendering",
+            "value": 155,
+            "range": "±10.80%",
+            "unit": "ops/sec",
+            "extra": "64 samples"
+          },
+          {
+            "name": "slot rendering",
+            "value": 159,
+            "range": "±8.20%",
+            "unit": "ops/sec",
+            "extra": "53 samples"
+          },
+          {
+            "name": "sorting",
+            "value": 15.06,
+            "range": "±2.83%",
             "unit": "ops/sec",
             "extra": "34 samples"
           }
