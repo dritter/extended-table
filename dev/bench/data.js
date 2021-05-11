@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1620715345639,
+  "lastUpdate": 1620756912243,
   "repoUrl": "https://github.com/dritter/extended-table",
   "entries": {
     "Benchmark.js Benchmark": [
@@ -624,6 +624,51 @@ window.BENCHMARK_DATA = {
             "name": "sorting",
             "value": 15.06,
             "range": "±2.83%",
+            "unit": "ops/sec",
+            "extra": "34 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dritter03@googlemail.com",
+            "name": "Dominik Ritter",
+            "username": "dritter"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "82b4a268c4b1a9fd26f710c442f4dc81c613a56a",
+          "message": "Merge pull request #12 from dritter/fix_code_dups\n\nRemove code duplication",
+          "timestamp": "2021-05-11T20:14:07+02:00",
+          "tree_id": "6e4a21a65d538732742abbdcaefbb06a3644316e",
+          "url": "https://github.com/dritter/extended-table/commit/82b4a268c4b1a9fd26f710c442f4dc81c613a56a"
+        },
+        "date": 1620756912224,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "default rendering",
+            "value": 170,
+            "range": "±11.32%",
+            "unit": "ops/sec",
+            "extra": "66 samples"
+          },
+          {
+            "name": "slot rendering",
+            "value": 166,
+            "range": "±12.04%",
+            "unit": "ops/sec",
+            "extra": "56 samples"
+          },
+          {
+            "name": "sorting",
+            "value": 14.83,
+            "range": "±2.52%",
             "unit": "ops/sec",
             "extra": "34 samples"
           }
