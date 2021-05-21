@@ -1,7 +1,7 @@
 import {deepValue} from "@jsier/deep-value";
 
 const slugEx = new RegExp(/[^a-z0-9\-]/ig);
-const sluggify = (input) => {
+export const sluggify = (input) => {
     if (!input) {
         return
     }
