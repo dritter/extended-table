@@ -1,6 +1,7 @@
 import {fireEvent, render} from "@testing-library/svelte";
 import ExtendedTable from "../src/ExtendedTable.svelte";
 import { sortByColumn, resetSorting } from '../src/sortBy';
+import { sluggify } from '../src/cssClassNames';
 
 const defaultRows = [
     { col1: {subprop: 1}, col2: "xabc", unrelated: "test1", col3: "hier ist zzz"},
@@ -32,8 +33,8 @@ export const buildTable = (config) => {
     config.props = config.props || {};
     !config.props.sortingFunction ? config.props.sortingFunction = sortByColumn : true;
 
-    let columns = config.columns || freshCopy(defaultColumns);
-    let rows = config.rows || freshCopy(defaultRows);
+    const columns = config.columns || freshCopy(defaultColumns);
+    const rows = config.rows || freshCopy(defaultRows);
 
     if (config.columnMods) {
         config.columnMods.forEach((mod, index) => {
@@ -47,13 +48,12 @@ export const buildTable = (config) => {
         ...config.props
     });
 
-    const slugEx = new RegExp(/[^a-z0-9]/g);
     columns.forEach((col, index) => {
-        let cssIndex = index + 1;
-        col.cssClass = col.propertyPath.replace(slugEx, '_');
+        const cssIndex = index + 1;
+        col.cssClass = sluggify(col.propertyPath);
 
         col.getHeadline = () => {
-            let headCell = container.querySelector(`th:nth-of-type(${cssIndex})`);
+            const headCell = container.querySelector(`th:nth-of-type(${cssIndex})`);
             return headCell.textContent.trim();
         };
 
@@ -62,19 +62,19 @@ export const buildTable = (config) => {
             if (!row) {
                 cell = container.querySelector(`th:nth-of-type(${cssIndex})`);
             } else {
-                cell = container.querySelector(`tbody tr:nth-of-type(${row}) ${col.cssClass}`);
+                cell = container.querySelector(`tbody tr:nth-of-type(${row}) .col-${col.cssClass}`);
             }
             await fireEvent.click(cell);
         };
 
         col.getValues = () => {
-            let cells = container.querySelectorAll(`.col-${col.cssClass}`);
+            const cells = container.querySelectorAll(`.col-${col.cssClass}`);
 
             return Array.prototype.map.call(cells, (element) => element.textContent.trim());
         };
 
         col.expand = async () => {
-            let cell = container.querySelector(`th:nth-of-type(${cssIndex}) div`);
+            const cell = container.querySelector(`th:nth-of-type(${cssIndex}) div`);
             await fireEvent.click(cell);
         };
     });
