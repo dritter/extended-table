@@ -77,7 +77,29 @@ export const buildTable = (config) => {
             const cell = container.querySelector(`th:nth-of-type(${cssIndex}) div`);
             await fireEvent.click(cell);
         };
+
+        col.getHeaderCssClasses = () => {
+            const cell = container.querySelector(`th:nth-of-type(${cssIndex})`);
+
+            return cell.className.split(/\s+/)
+        }
+
+        col.getCssClasses = (row) => {
+            row = row || 1
+            const cell = container.querySelector(`tbody tr:nth-of-type(${row}) .col-${col.cssClass}`);
+
+            return cell.className.split(/\s+/)
+        }
     });
+
+    rows.forEach((row, index) => {
+        const cssIndex = index + 1;
+        row.getRowClasses = () => {
+            const tableRow = container.querySelector(`tbody tr:nth-of-type(${cssIndex})`);
+
+            return tableRow.className.split(/\s+/)
+        }
+    })
 
     return {
         ref: container,
