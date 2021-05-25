@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1620756912243,
+  "lastUpdate": 1621985632640,
   "repoUrl": "https://github.com/dritter/extended-table",
   "entries": {
     "Benchmark.js Benchmark": [
@@ -671,6 +671,51 @@ window.BENCHMARK_DATA = {
             "range": "±2.52%",
             "unit": "ops/sec",
             "extra": "34 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dritter03@googlemail.com",
+            "name": "Dominik Ritter",
+            "username": "dritter"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c187e9cbf182978fa49939cebb5c3f3b2fe23d63",
+          "message": "Merge pull request #15 from dritter/add_cssclass_tests\n\nAdd CSS Class tests",
+          "timestamp": "2021-05-26T01:32:54+02:00",
+          "tree_id": "da8cd4379e4875b1d8e8f3c6b7cc03acabdea31e",
+          "url": "https://github.com/dritter/extended-table/commit/c187e9cbf182978fa49939cebb5c3f3b2fe23d63"
+        },
+        "date": 1621985632625,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "default rendering",
+            "value": 214,
+            "range": "±10.31%",
+            "unit": "ops/sec",
+            "extra": "65 samples"
+          },
+          {
+            "name": "slot rendering",
+            "value": 206,
+            "range": "±10.62%",
+            "unit": "ops/sec",
+            "extra": "55 samples"
+          },
+          {
+            "name": "sorting",
+            "value": 13.97,
+            "range": "±1.77%",
+            "unit": "ops/sec",
+            "extra": "33 samples"
           }
         ]
       }
