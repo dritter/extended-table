@@ -5,10 +5,9 @@
     import { sortByDefinition, sortByColumn } from './sortBy';
     import { getHeadlineClasses, getRowClasses, getCellClasses } from './cssClassNames';
 
-    export let data = [];
     const defaultRowClickHandler = (row) => true;
-    export let onRowClick = defaultRowClickHandler;
 
+    export let data = [];
     export let config = {}
     const defaults = {
         sorting: {
@@ -33,6 +32,7 @@
         },
         columns: [],
         rows: {
+            clickHandler: defaultRowClickHandler,
             classNames: [],
         },
     };
@@ -197,7 +197,7 @@
     </thead>
     <tbody>
         {#each data as d, rowIndex}
-            <tr on:click={() => onRowClick(d)} class="{getRowClasses(rowIndex, _config.rows.classNames, d)}" class:mouse-pointer={onRowClick !== defaultRowClickHandler}>
+            <tr on:click={() => _config.rows.clickHandler(d)} class="{getRowClasses(rowIndex, _config.rows.classNames, d)}" class:mouse-pointer={_config.rows.clickHandler !== defaultRowClickHandler}>
                 {#each _config.columns as column, columnIndex}
                     <td on:click={(event) => onCellClick(event, column, d, columnIndex)} class="{getCellClasses(columnIndex, rowIndex, column, d)}" class:hidden={column.hidden}>
                         {#if column.collapsed}
