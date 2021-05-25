@@ -17,7 +17,10 @@ test('expanding works properly', async () => {
 });
 
 test('expanding all columns works properly', async () => {
-    const table = buildTable({columnMods: mods, props: {expandAll: true}});
+    const table = buildTable({
+        columnMods: mods,
+        props: {collapsing: {expandAll: true}}
+    });
 
     const column2Headline = table.columns[1];
     expect(column2Headline.getHeadline()).toEqual('...');

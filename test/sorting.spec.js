@@ -43,7 +43,10 @@ test('sorting works properly with nested objects', async () => {
 });
 
 test('multisort=false lets only sort one column', async () => {
-    const table = buildTable({columnMods: sortableMods, props: {multisort: false}});
+    const table = buildTable({
+        columnMods: sortableMods,
+        props: {sorting: {multisort: false}}
+    });
 
     const column2 = table.columns[1];
     expect(column2.getHeadline()).toEqual('Column2');
@@ -60,7 +63,7 @@ test('multisort=false lets only sort one column', async () => {
 test('initial sort works as expected', async () => {
     const table = buildTable({
         columnMods: sortableMods,
-        props: {initialSortBy: 'col2', initialSortDirection: 'desc'}
+        props: {sorting: {initial: { propertyPath: 'col2', direction: 'desc'}}}
     });
 
     const testColumn = table.columns[1];

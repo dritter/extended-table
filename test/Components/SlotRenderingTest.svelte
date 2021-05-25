@@ -28,8 +28,14 @@
     const getNewName = (val) => 'new-' + val;
 
     const sortingFunction = () => {};
+    const config = {
+        columns: columnDefinition,
+        sorting: {
+            function: sortingFunction,
+        },
+    }
 </script>
 
-<ExtendedTable columns={columnDefinition} data={rows} sortingFunction={sortingFunction}>
+<ExtendedTable data={rows} config={config}>
     <div slot="column-2" let:data={row}>{getNewName(row.col2)}</div>
 </ExtendedTable>

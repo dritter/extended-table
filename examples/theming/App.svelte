@@ -36,6 +36,11 @@
         ],
     };
 
+    const config = {
+        columns: columnDefinition,
+        rows: rowDefinition
+    }
+
     let data = rawData.slice(0, 10);
 
     let theme = "light";
@@ -56,7 +61,7 @@ Theme
             --theme-headline-background-color: {theme === 'light' ? '#ffffff' : '#34495e'};
             --theme-text-color: {theme === 'light' ? '#34495e' : '#ecf0f1'};
     ">
-        <ExtendedTable columns={columnDefinition} data={data} rows={rowDefinition}></ExtendedTable>
+        <ExtendedTable data={data} config={config}></ExtendedTable>
     </div>
 </div>
 

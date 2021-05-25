@@ -31,7 +31,6 @@ export const buildTable = (config) => {
     resetSorting();
     config = config || {};
     config.props = config.props || {};
-    !config.props.sortingFunction ? config.props.sortingFunction = sortByColumn : true;
 
     const columns = config.columns || freshCopy(defaultColumns);
     const rows = config.rows || freshCopy(defaultRows);
@@ -42,9 +41,27 @@ export const buildTable = (config) => {
         })
     }
 
+    const tableConfig = {
+        columns: columns,
+    }
+    if (!config.props.sortingFunction) {
+        tableConfig.sorting = {
+            function: sortByColumn
+        }
+    }
+    if (config.props.sorting) {
+        tableConfig.sorting = config.props.sorting;
+    }
+    if (config.props.rows) {
+        tableConfig.rows = config.props.rows;
+    }
+    if (config.props.collapsing) {
+        tableConfig.collapsing = config.props.collapsing;
+    }
+
     const { container } = render(ExtendedTable, {
         data: rows,
-        columns: columns,
+        config: tableConfig,
         ...config.props
     });
 

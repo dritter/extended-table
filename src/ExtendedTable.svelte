@@ -2,40 +2,56 @@
     import { onMount } from 'svelte';
     import { deepValue } from '@jsier/deep-value';
     import stickybits from 'stickybits/dist/stickybits.es';
-    import { sortByDefinition } from './sortBy';
+    import { sortByDefinition, sortByColumn } from './sortBy';
     import { getHeadlineClasses, getRowClasses, getCellClasses } from './cssClassNames';
 
     export let data = [];
-    export let columns = [];
-    export let rows = {
-        classNames: [],
-    };
     const defaultRowClickHandler = (row) => true;
     export let onRowClick = defaultRowClickHandler;
 
-    export let iconAsc = '↑';
-    export let iconDesc = '↓';
-    export let initialSortBy = null; // PropertyPath
-    export let initialSortDirection = 'asc';
-    export let showSortIndicatorsOnInitialSort = true;
-    export let collapsedPlaceholder = '...';
-    export let stickyHeaders = true;
-    export let stickyOffset = 0;
-    export let expandAll = false;
-    export let autoCollapse = false;
-    export let multisort = true;
-    export let sortingFunction = null;
+    export let config = {}
+    const defaults = {
+        sorting: {
+            iconAsc: '↑',
+            iconDesc: '↓',
+            multisort: true, // or multicolumn?
+            function: sortByColumn,
+            initial: {
+                propertyPath: null,
+                direction: 'asc',
+                showSortIndicators: true,
+            },
+        },
+        collapsing: {
+            automatically: false,
+            expandAll: false,
+            placeholder: '...',
+        },
+        sticky: {
+            headers: true,
+            offset: 0,
+        },
+        columns: [],
+        rows: {
+            classNames: [],
+        },
+    };
 
-    if (sortingFunction === null) {
-        (async () => {
-            // Dynamic import
-            let sortByObj = await import('./sortBy');
-            sortingFunction = sortByObj.sortByColumn;
-        })();
+    const mergeConfig = (target, source) => {
+        for (const key of Object.keys(source)) {
+            if (source[key] instanceof Object && key in target) {
+                Object.assign(source[key], mergeConfig(target[key], source[key]))
+            }
+        }
+
+        Object.assign(target || {}, source)
+        return target
     }
 
+    const _config = mergeConfig(defaults, config)
+
     const clearCaches = () => {
-        columns = columns;
+        _config.columns = _config.columns;
         data = data;
     };
 
@@ -43,11 +59,11 @@
     let table;
     onMount(() => {
         let heads = table.querySelectorAll('thead th');
-        if (stickyHeaders) {
-            stickybits(heads, {stickyBitStickyOffset: stickyOffset});
+        if (_config.sticky.headers) {
+            stickybits(heads, {stickyBitStickyOffset: _config.sticky.offset});
         }
 
-        if (autoCollapse) {
+        if (_config.collapsing.automatically) {
             let tableRect = table.getBoundingClientRect();
 
             let viewportWidth = windowWidth - tableRect.left;
@@ -57,13 +73,13 @@
                 let rect = head.getBoundingClientRect();
 
                 if (cumulatedHeadWidths + rect.width > viewportWidth) {
-                    if (expandAll) {
-                        columns.filter((column, index) => index >= (i - 1))
+                    if (_config.collapsing.expandAll) {
+                        _config.columns.filter((column, index) => index >= (i - 1))
                                 .map((column) => column.hidden = true);
-                        columns[i].hidden = false;
-                        columns[i].collapsed = true;
+                        _config.columns[i].hidden = false;
+                        _config.columns[i].collapsed = true;
                     } else {
-                        columns.filter((column, index) => index >= i)
+                        _config.columns.filter((column, index) => index >= i)
                             .map((column) => column.collapsed = true);
                     }
 
@@ -76,22 +92,22 @@
         }
     });
 
-    if (initialSortBy) {
-        if (showSortIndicatorsOnInitialSort) {
-            const initialSortColumn = columns.find((c) => c.propertyPath === initialSortBy);
-            initialSortColumn.propertyPath = initialSortBy;
-            initialSortColumn.direction = initialSortDirection;
+    if (_config.sorting.initial.propertyPath) {
+        if (_config.sorting.initial.showSortIndicators) {
+            const initialSortColumn = _config.columns.find((c) => c.propertyPath === _config.sorting.initial.propertyPath);
+            initialSortColumn.propertyPath = _config.sorting.initial.propertyPath;
+            initialSortColumn.direction = _config.sorting.initial.direction;
         }
         const def = {};
-        def[initialSortDirection] = (u) => {
-            return deepValue(u, initialSortBy);
+        def[_config.sorting.initial.direction] = (u) => {
+            return deepValue(u, _config.sorting.initial.propertyPath);
         };
         sortByDefinition(data, [def]);
     }
 
     const expandColumn = (column) => {
-        if (expandAll) {
-            columns.map((column) => {
+        if (_config.collapsing.expandAll) {
+            _config.columns.map((column) => {
                 column.collapsed = false;
                 column.hidden = false;
             });
@@ -160,18 +176,18 @@
 <table bind:this={table} class="et">
     <thead>
         <tr>
-            {#each columns as column, columnHeaderIndex}
-                <th on:click={() => sortingFunction(column, columns, data, multisort, clearCaches)} class="{getHeadlineClasses(columnHeaderIndex, column)}" class:hidden={column.hidden}>
+            {#each _config.columns as column, columnHeaderIndex}
+                <th on:click={() => _config.sorting.function(column, _config.columns, data, _config.sorting.multisort, clearCaches)} class="{getHeadlineClasses(columnHeaderIndex, column)}" class:hidden={column.hidden}>
                     {#if column.collapsed}
                         <div on:click|stopPropagation={expandColumn(column)}>
-                            {@html collapsedPlaceholder}
+                            {@html _config.collapsing.placeholder}
                         </div>
                     {:else}
                         {@html column.title}
                         {#if column.direction === 'asc'}
-                            {iconAsc}
+                            {_config.sorting.iconAsc}
                         {:else if column.direction === 'desc'}
-                            {iconDesc}
+                            {_config.sorting.iconDesc}
                         {/if}
                     {/if}
                 </th>
@@ -181,12 +197,12 @@
     </thead>
     <tbody>
         {#each data as d, rowIndex}
-            <tr on:click={() => onRowClick(d)} class="{getRowClasses(rowIndex, rows.classNames, d)}" class:mouse-pointer={onRowClick !== defaultRowClickHandler}>
-                {#each columns as column, columnIndex}
+            <tr on:click={() => onRowClick(d)} class="{getRowClasses(rowIndex, _config.rows.classNames, d)}" class:mouse-pointer={onRowClick !== defaultRowClickHandler}>
+                {#each _config.columns as column, columnIndex}
                     <td on:click={(event) => onCellClick(event, column, d, columnIndex)} class="{getCellClasses(columnIndex, rowIndex, column, d)}" class:hidden={column.hidden}>
                         {#if column.collapsed}
                             <div class="mouse-pointer" on:click|stopPropagation={expandColumn(column)}>
-                                {@html collapsedPlaceholder}
+                                {@html _config.collapsing.placeholder}
                             </div>
                         {:else}
                             {#if data && slots.has('column-' + (columnIndex + 1))}
