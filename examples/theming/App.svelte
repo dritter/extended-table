@@ -34,6 +34,9 @@
             {value: (data, rowIndex) => (rowIndex + 1) % 2 === 0 ? data.last_name : ""},
             {value: (data, rowIndex) => data.title === "mr" ? "male my-other-class" : ""},
         ],
+        group: (data, rowIndex) => {
+            return rowIndex % 3 === 0;
+        },
     };
 
     let data = rawData.slice(0, 10);

@@ -9,6 +9,7 @@
     export let columns = [];
     export let rows = {
         classNames: [],
+        group: () => false,
     };
     const defaultRowClickHandler = (row) => true;
     export let onRowClick = defaultRowClickHandler;
@@ -108,6 +109,16 @@
         }
     }
 
+    const openTBody = () => {
+        console.log('Opening TBODY');
+        return '<tbody>';
+    }
+
+    const closeTBody = () => {
+        console.log('Closing TBODY');
+        return '</tbody>';
+    }
+
     let slots = new Set($$props.$$slots ? Object.getOwnPropertyNames($$props.$$slots) : []);
 </script>
 
@@ -121,7 +132,7 @@
         position: relative;
     }
 
-    tbody tr:hover {
+    table tr:hover {
         background-color: rgba(0, 0, 0, 0.1);
     }
 
@@ -137,12 +148,12 @@
         font-weight: 700;
     }
 
-    tbody .row-even {
+    tr.row-even {
         background: rgba(153, 202, 255, 0.15);
         border-bottom: 0;
     }
 
-    tbody .col-even {
+    tr.col-even {
         background: rgba(153, 202, 255, 0.15);
     }
 
@@ -179,8 +190,13 @@
         </tr>
         <slot name="additionalHeaderRow"></slot>
     </thead>
-    <tbody>
         {#each data as d, rowIndex}
+            {#if rowIndex === 0 || rows.group(d, rowIndex)}
+                {#if rowIndex > 0}
+                    {@html closeTBody()}
+                {/if}
+                {@html openTBody()}
+            {/if}
             <tr on:click={() => onRowClick(d)} class="{getRowClasses(rowIndex, rows.classNames, d)}" class:mouse-pointer={onRowClick !== defaultRowClickHandler}>
                 {#each columns as column, columnIndex}
                     <td on:click={(event) => onCellClick(event, column, d, columnIndex)} class="{getCellClasses(columnIndex, rowIndex, column, d)}" class:hidden={column.hidden}>
@@ -241,7 +257,9 @@
                 {/each}
             </tr>
             <slot name="additionalRow" rowData={d}></slot>
+            {#if rowIndex === data.length -1}
+                {@html closeTBody()}
+            {/if}
         {/each}
-    </tbody>
 </table>
 </div>
