@@ -27,8 +27,7 @@
   "homepage": "https://github.com/dritter/extended-table#readme",
   "dependencies": {
     "@jsier/deep-value": "^1.2.1",
-    "fast-sort": "^3.4.0",
-    "stickybits": "^3.7.11"
+    "fast-sort": "^3.4.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",

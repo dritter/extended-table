@@ -1,7 +1,6 @@
 <script>
     import { onMount } from 'svelte';
     import { deepValue } from '@jsier/deep-value';
-    import stickybits from "stickybits";
     import { sortByDefinition } from './sortBy';
     import { getHeadlineClasses, getRowClasses, getCellClasses } from './cssClassNames';
 
@@ -43,9 +42,6 @@
     let table;
     onMount(() => {
         let heads = table.querySelectorAll('thead th');
-        if (stickyHeaders) {
-            stickybits(heads, {stickyBitStickyOffset: stickyOffset});
-        }
 
         if (autoCollapse) {
             let tableRect = table.getBoundingClientRect();
@@ -153,15 +149,20 @@
     .hidden {
         display: none;
     }
+
+    .sticky {
+        position: sticky;
+        top: var(--sticky-offset, 0);
+    }
 </style>
 
 <svelte:window bind:innerWidth={windowWidth} />
 <div class="overflow-container">
-<table bind:this={table} class="et">
+<table bind:this={table} class="et" style="--sticky-offset={stickyOffset}">
     <thead>
         <tr>
             {#each columns as column, columnHeaderIndex}
-                <th on:click={() => sortingFunction(column, columns, data, multisort, clearCaches)} class="{getHeadlineClasses(columnHeaderIndex, column)}" class:hidden={column.hidden}>
+                <th on:click={() => sortingFunction(column, columns, data, multisort, clearCaches)} class="{getHeadlineClasses(columnHeaderIndex, column)}" class:hidden={column.hidden} class:sticky={stickyHeaders}>
                     {#if column.collapsed}
                         <div on:click|stopPropagation={expandColumn(column)}>
                             {@html collapsedPlaceholder}
