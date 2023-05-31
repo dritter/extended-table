@@ -1,7 +1,7 @@
 <script>
     import { onMount } from 'svelte';
     import { deepValue } from '@jsier/deep-value';
-    import * as stickybits from "stickybits";
+    import stickybits from "stickybits";
     import { sortByDefinition } from './sortBy';
     import { getHeadlineClasses, getRowClasses, getCellClasses } from './cssClassNames';
 
