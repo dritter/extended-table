@@ -1,11 +1,11 @@
 {
   "name": "extended-table",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "",
   "main": "./src/ExtendedTable.svelte",
   "svelte": "./src/ExtendedTable.svelte",
   "scripts": {
-    "test": "jest test --testPathIgnorePatterns=performance --coverage",
+    "test": "node_modules/.bin/jest test --env=jsdom --testPathIgnorePatterns=performance --coverage",
     "test:watch": "npm run test -- --watch",
     "test:performance": "node_modules/.bin/jest --env=jsdom ./test/performance/"
   },
@@ -27,21 +27,21 @@
   "homepage": "https://github.com/dritter/extended-table#readme",
   "dependencies": {
     "@jsier/deep-value": "^1.2.1",
-    "fast-sort": "^2.0.1",
-    "stickybits": "^3.7.6"
+    "fast-sort": "^3.4.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
     "@testing-library/jest-dom": "^5.1.1",
     "@testing-library/svelte": "^3.0.0",
-    "babel-jest": "^25.1.0",
+    "babel-jest": "^29.5.0",
     "babel-preset-next": "^1.2.0",
     "benchmark": "^2.1.4",
-    "jest": "^25.1.0",
-    "jsdom": "^16.2.2",
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
+    "jsdom": "^22.0.0",
     "svelte": "^3.20.1",
-    "svelte-jester": "^1.0.5"
+    "svelte-jester": "^2.3.2"
   },
   "jest": {
     "bail": false,

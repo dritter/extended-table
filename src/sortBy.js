@@ -1,8 +1,8 @@
-import sort from 'fast-sort';
+import { inPlaceSort } from 'fast-sort';
 import { deepValue } from '@jsier/deep-value';
 
 export const sortByDefinition = (data, definition) => {
-    sort(data).by(definition);
+    data = inPlaceSort(data).by(definition);
 };
 
 export const sortBy = (data, propertyPath, direction) => {
@@ -11,9 +11,7 @@ export const sortBy = (data, propertyPath, direction) => {
         return deepValue(u, propertyPath);
     };
 
-    sortByDefinition(data, def);
-
-    return data;
+    data = sortByDefinition(data, def);
 };
 
 let sortDefinition = new Set();
