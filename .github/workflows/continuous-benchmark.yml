@@ -10,7 +10,10 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'add Benchmark.js Benchmark (benchmarkjs) benchmark result')"
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
       - name: Run benchmark
         run: npm install && npm run test:performance
       - name: Store benchmark result
