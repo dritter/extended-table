@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1685831126651,
+  "lastUpdate": 1685993630717,
   "repoUrl": "https://github.com/dritter/extended-table",
   "entries": {
     "Benchmark.js Benchmark": [
@@ -761,6 +761,51 @@ window.BENCHMARK_DATA = {
             "range": "±2.03%",
             "unit": "ops/sec",
             "extra": "31 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dritter03@googlemail.com",
+            "name": "Dominik Ritter",
+            "username": "dritter"
+          },
+          "committer": {
+            "email": "dritter03@googlemail.com",
+            "name": "Dominik Ritter",
+            "username": "dritter"
+          },
+          "distinct": true,
+          "id": "7dc15cc89913835d226e8821bc8c7889781151b9",
+          "message": "Remove stickybits from docs",
+          "timestamp": "2023-06-05T21:32:36+02:00",
+          "tree_id": "619e192c89984ab05cd5586c5a690ff3b28d03a5",
+          "url": "https://github.com/dritter/extended-table/commit/7dc15cc89913835d226e8821bc8c7889781151b9"
+        },
+        "date": 1685993630691,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "default rendering",
+            "value": 161,
+            "range": "±8.72%",
+            "unit": "ops/sec",
+            "extra": "62 samples"
+          },
+          {
+            "name": "slot rendering",
+            "value": 161,
+            "range": "±18.09%",
+            "unit": "ops/sec",
+            "extra": "51 samples"
+          },
+          {
+            "name": "sorting",
+            "value": 14.59,
+            "range": "±2.76%",
+            "unit": "ops/sec",
+            "extra": "32 samples"
           }
         ]
       }
