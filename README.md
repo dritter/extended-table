@@ -157,7 +157,6 @@ Currently there are three dependencies:
   - [fast-sort](https://github.com/snovakovic/fast-sort) for sorting
   - [deep-value](https://github.com/seidme/jsier/tree/master/deep-value) for
     propertyPath resolution
-  - [stickybits](https://github.com/yowainwright/stickybits) for sticky headers
 
 ## Benchmarks
 
