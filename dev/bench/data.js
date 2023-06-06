@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1685993630717,
+  "lastUpdate": 1686079998649,
   "repoUrl": "https://github.com/dritter/extended-table",
   "entries": {
     "Benchmark.js Benchmark": [
@@ -806,6 +806,51 @@ window.BENCHMARK_DATA = {
             "range": "±2.76%",
             "unit": "ops/sec",
             "extra": "32 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dritter03@googlemail.com",
+            "name": "Dominik Ritter",
+            "username": "dritter"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4ce4c4b8d6c4cd022ccfc6f36020ba00c2c57236",
+          "message": "Merge pull request #17 from dritter/remove-stickybits-artifacts\n\nRemove artifacts from stickybits",
+          "timestamp": "2023-06-06T21:32:13+02:00",
+          "tree_id": "6084cdb6e2fb1075764cb3ffed3e0bc51b8ac8d2",
+          "url": "https://github.com/dritter/extended-table/commit/4ce4c4b8d6c4cd022ccfc6f36020ba00c2c57236"
+        },
+        "date": 1686079998618,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "default rendering",
+            "value": 144,
+            "range": "±7.88%",
+            "unit": "ops/sec",
+            "extra": "63 samples"
+          },
+          {
+            "name": "slot rendering",
+            "value": 139,
+            "range": "±10.12%",
+            "unit": "ops/sec",
+            "extra": "51 samples"
+          },
+          {
+            "name": "sorting",
+            "value": 15.85,
+            "range": "±3.04%",
+            "unit": "ops/sec",
+            "extra": "35 samples"
           }
         ]
       }
