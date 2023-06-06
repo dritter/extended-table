@@ -112,11 +112,6 @@
         cursor: pointer;
     }
 
-    .overflow-container {
-        max-width: 100vw;
-        position: relative;
-    }
-
     tbody tr:hover {
         background-color: rgba(0, 0, 0, 0.1);
     }
@@ -157,8 +152,7 @@
 </style>
 
 <svelte:window bind:innerWidth={windowWidth} />
-<div class="overflow-container">
-<table bind:this={table} class="et" style="--sticky-offset={stickyOffset}">
+<table bind:this={table} style="--sticky-offset={stickyOffset}">
     <thead>
         <tr>
             {#each columns as column, columnHeaderIndex}
@@ -245,4 +239,3 @@
         {/each}
     </tbody>
 </table>
-</div>
