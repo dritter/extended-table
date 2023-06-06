@@ -152,7 +152,7 @@
 </style>
 
 <svelte:window bind:innerWidth={windowWidth} />
-<table bind:this={table} style="--sticky-offset={stickyOffset}" class="{$$props.class}">
+<table bind:this={table} style="--sticky-offset:{stickyOffset}" class="{$$props.class}">
     <thead>
         <tr>
             {#each columns as column, columnHeaderIndex}
